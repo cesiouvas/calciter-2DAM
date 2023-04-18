@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
-<body>
+<body style="width: 50%; margin: 0 auto; ">
 
     <!-- Menú superior -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -32,8 +32,8 @@
         </div>
     </nav>
 
-    <div class="container p-4"">
-        <div class=" row" id="iter-info">
+    <div class="container p-4" style="width: 75%;">
+        <div class="row" id="iter-info">
             <!-- Viajes del usuario actual -->
         </div>
     </div>
@@ -243,7 +243,7 @@
                                 <select class="date-form" name="paises" id="paises">
                                     <!-- Los paises se llenan con el js -->
                                 </select>
-                                <input type="text" class="date-form" id="ciudad" name="ciudad" required>
+                                <input type="text" class="date-form" id="ciudad" name="ciudad" placeholder="Ciudad/pueblo" required>
                             </div>
 
                             <!-- Fecha de inicio y fin -->
@@ -285,7 +285,7 @@
     <script src="../code/register.js" type="module"></script>
     <script src="../code/logged.js" type="module"></script>
     <script src="../code/login.js" type="module"></script>
-    <script src="../code/iter.js" type="module"></script>
+    <script src="../code/createIter.js" type="module"></script>
 </body>
 
 </html>

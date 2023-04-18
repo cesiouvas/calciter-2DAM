@@ -56,9 +56,10 @@ export const selectUsuarios = await getDocs(collection(db, "usuarios"))
 export const selectPaises = await getDocs(collection(db, "paises"))
 
 //Crear un nuevo viaje
-export async function insertIter(email, desc, country, city, startDate, endDate, iterId) {
+export async function insertIter(email, name, desc, country, city, startDate, endDate, iterId) {
   await addDoc(collection(db, "viajes"), {
     iterId: iterId,
+    name: name,
     description: desc,
     country: country,
     city: city,
