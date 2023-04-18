@@ -32,11 +32,11 @@ export const iterRef = collection(db, "viajes")
 export const paisRef = collection(db, "paises")
 
 //Insertar usuarios en la db
-export async function guardar(name, surname, username, email, passwd, rol) {
+export async function guardar(name, surname, telefono, email, passwd, rol) {
   await addDoc(collection(db, "usuarios"), {
     name: name,
     surname: surname,
-    username: username,
+    telefono: telefono,
     email: email,
     passwd: passwd,
     rol: rol
@@ -52,4 +52,20 @@ export async function guardar(name, surname, username, email, passwd, rol) {
 //Select de los usuarios
 export const selectUsuarios = await getDocs(collection(db, "usuarios"))
 
+//Select de todos los paises
 export const selectPaises = await getDocs(collection(db, "paises"))
+
+//Crear un nuevo viaje
+export async function insertIter(email, desc, country, city, startDate, endDate, iterId) {
+  await addDoc(collection(db, "viajes"), {
+    iterId: iterId,
+    description: desc,
+    country: country,
+    city: city,
+    startDate: startDate,
+    endDate: endDate,
+    participants: [
+      email
+    ]
+  })
+}

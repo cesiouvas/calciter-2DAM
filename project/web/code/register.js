@@ -19,13 +19,13 @@ const inputs = document.querySelectorAll("#register-form input")
 
 //Parametros de validación del formulario
 const validation = {
-    username: /^[a-zA-Z0-9\-\_]{4,20}$/,
+    telefono: /^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}/,
     passwd: /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,
     email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z09-]+\.[a-zA-Z0-9-.]+$/,
 }
 
 const camposValidados = {
-    username: false,
+    telefono: false,
     name: false,
     surname: false,
     passwd: false,
@@ -40,9 +40,9 @@ window.addEventListener('DOMContentLoaded', () => {
 //Validar el formulario
 function validateForm(e) {
     switch (e.target.name) {
-        case "username":
+        case "telefono":
             //Llamada a la función que valida el username
-            validarCampo(validation.username, e.target, 'username')
+            validarCampo(validation.telefono, e.target, 'telefono')
             break
         case "passwd":
             //Llamada a la función que valida la contraseña
@@ -127,7 +127,7 @@ inputs.forEach((input) => {
 })
 
 btnRegister.addEventListener('click', async (e) => {
-    if (camposValidados.username && camposValidados.name && camposValidados.email && camposValidados.surname && camposValidados.passwd) {
+    if (camposValidados.telefono && camposValidados.name && camposValidados.email && camposValidados.surname && camposValidados.passwd) {
         e.preventDefault()
         //Registra el usuario
         registrar()
@@ -143,12 +143,12 @@ btnRegister.addEventListener('click', async (e) => {
         //Reinicia los valores del formulario
         name1.value = ""
         surname.value = ""
-        username.value = ""
+        telefono.value = ""
         email.value = ""
         passwd.value = ""
         confpasswd.value = ""
 
-        camposValidados['username'] = false
+        camposValidados['telefono'] = false
         camposValidados['name'] = false
         camposValidados['surname'] = false
         camposValidados['email'] = false
@@ -179,11 +179,11 @@ btnRegister.addEventListener('click', async (e) => {
 const registrar = () => {
     const name = registerForm['name']
     const surname = registerForm['surname']
-    const username = registerForm['username']
+    const telefono = registerForm['telefono']
     const email = registerForm['email']
     const passwd = registerForm['passwd']
 
-    guardar(name.value, surname.value, username.value, email.value, passwd.value, "usuario")
+    guardar(name.value, surname.value, telefono.value, email.value, passwd.value, "usuario")
 
 
     //Crea una transacción para guardar los datos
