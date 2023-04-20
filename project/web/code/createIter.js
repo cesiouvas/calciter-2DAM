@@ -1,4 +1,4 @@
-import { auth, iterRef, paisRef, insertIter } from './firebase2.js'
+import { auth, iterRef, paisRef, insertIter, newParticipant } from './firebase2.js'
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"
 
 import { showIter } from './inIter.js'
@@ -6,20 +6,20 @@ import { showIter } from './inIter.js'
 import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 
 let info = document.getElementById('iter-info')
-let paises = document.getElementById('select-paises')
 let dates = document.getElementById('dates')
-let actualUser
 
 //Campos del viaje
 let name = document.getElementById('itername')
 let desc = document.getElementById('iterdesc')
 let pais = document.getElementById('paises')
 let ciudad = document.getElementById('ciudad')
-let startdate = document.getElementById('startdate')
-let enddate = document.getElementById('enddate')
-
 const inputs = document.querySelectorAll("#new-iter-form input")
 
+//Acceder a un viaje
+let accessId = document.getElementById('accessId')
+let accessInvite = document.getElementById('accessInvite')
+
+//Validar campos
 const camposValidados = {
     itername: false,
     iterdesc: false,
@@ -181,7 +181,26 @@ async function saveIter() {
     } while (cont)
 
     insertIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
+    setIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
 }
 
+//Acceder a un viaje mediante código
+accessInvite.addEventListener('click', async () => {
+    let inviteId = accessId.value
+    let email = auth.currentUser.email
 
+    let qIter = query(iterRef)
+    let querySnapshot = await getDocs(qIter)
+    let a = []
 
+    querySnapshot.forEach((doc) => {
+        if (doc.data().iterId == inviteId) {
+            a = doc.data().participants
+            a.push(auth.currentUser.email)
+            console.log(a)
+            newParticipant(a, doc.id)
+        } else {
+            console.log("La invitación no es correcta")
+        }
+    })
+})

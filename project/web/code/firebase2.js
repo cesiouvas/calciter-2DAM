@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js"
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"
-import { getFirestore, getDocs, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { getFirestore, getDocs, collection, addDoc, updateDoc, doc, FieldValue } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -33,6 +33,7 @@ export const paisRef = collection(db, "paises")
 
 //Insertar usuarios en la db
 export async function guardar(name, surname, telefono, email, passwd, rol) {
+
   await addDoc(collection(db, "usuarios"), {
     name: name,
     surname: surname,
@@ -68,5 +69,20 @@ export async function insertIter(email, name, desc, country, city, startDate, en
     participants: [
       email
     ]
+  })
+}
+
+//Añadir participantes a un viaje
+export async function newParticipant(email, iterId) {
+  const docRef = doc(db, "viajes", iterId)
+  console.log(docRef)
+  await updateDoc(docRef, {
+    participants: email
+  })
+  .then((docRef) => {
+    console.log("datos actualizados")
+  })
+  .catch((error) => {
+    console.log(error)
   })
 }

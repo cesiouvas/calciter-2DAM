@@ -40,7 +40,7 @@
 
     <!-- Modales -->
     <!-- REGISTRAR -->
-    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
@@ -144,7 +144,7 @@
     </div>
 
     <!-- LOGIN -->
-    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSignin"
+    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="ModalSignin"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
@@ -210,7 +210,7 @@
     </div>
 
     <!-- NUEVO VIAJE -->
-    <div class="modal fade" id="newIterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSignin"
+    <div class="modal fade" id="newIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalNewIter"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
@@ -269,6 +269,47 @@
                             <!-- Viaje creado correctamente -->
                             <div class="form-enviado" id="iter-enviado">
                                 <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Viaje creado correctamente</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- ACCEDER A UN VIAJE -->
+        <div class="modal fade" id="accessIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 style="color: white;">Acceder mediante invitación</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="access-iter-form">
+                        <div class="bg-box p-5 borde text-white">
+                            <!-- ID del viaje -->
+                            <div id="accesIterId" style="margin-top: -10px">
+                                <label for="iter-name">Código de invitación</label>
+                                <input class="form-control" type="text" placeholder="Código de invitación" id="accessId"
+                                    name="accessId" style="width: 100%;" required>
+                            </div>
+
+                            <p class="mt-2 fw-light">Tienes que recibir un código de invitación para poder unirte a un viaje</p>
+
+                            <button id="accessInvite" type="submit" class="btn mt-3 bg-dark"
+                                style="width: 100%; color: white;">Acceder al viaje</button>
+
+                            <!-- ERROR: ID no existente -->
+                            <div class="formulario-error" id="invalidId">
+                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La invitación no es correcta</p>
+                            </div>
+
+                            <!-- ID correcto -->
+                            <div class="form-enviado" id="validId">
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje</p>
                             </div>
                         </div>
                     </form>
