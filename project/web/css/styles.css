@@ -30,6 +30,7 @@ body {
 .bg-dark-x {
     background-color: var(--dark-x);
 }
+
 /* ---------------- */
 
 .login-icon {
@@ -113,17 +114,17 @@ body {
 .form-control:focus {
     border: 3px solid rgb(0, 0, 0);
     outline: none;
-    box-shadow: 3px 0px 30px rgb(53, 53, 53); 
+    box-shadow: 3px 0px 30px rgb(53, 53, 53);
 }
 
 /* --- Formulario correcto y enviado --- */
 .form-enviado {
     height: 45px;
-	line-height: 45px;
+    line-height: 45px;
     background: rgb(19, 180, 19);
     display: none;
     padding: 0 15px;
-	border-radius: 3px;
+    border-radius: 3px;
     width: 95%;
     font-size: 12px;
 }
@@ -135,11 +136,11 @@ body {
 /* --- Error al completar el formulario --- */
 .formulario-error {
     height: 45px;
-	line-height: 45px;
-	background: #ff0000;
-	padding: 0 15px;
-	border-radius: 3px;
-	display: none;
+    line-height: 45px;
+    background: #ff0000;
+    padding: 0 15px;
+    border-radius: 3px;
+    display: none;
     width: 95%;
     font-size: 12px;
 }
@@ -152,7 +153,7 @@ body {
 .error-validado {
     font-size: 12px;
     margin-bottom: 0;
-	display: none;
+    display: none;
 }
 
 .error-validado-activo {
@@ -169,21 +170,21 @@ body {
 }
 
 .correct .validacion-estado {
-	color: #1ed12d;
-	opacity: 1;
+    color: #1ed12d;
+    opacity: 1;
 }
 
 .incorrect .label {
-	color: #bb2929;
+    color: #bb2929;
 }
 
 .incorrect .validacion-estado {
-	color: #bb2929;
-	opacity: 1;
+    color: #bb2929;
+    opacity: 1;
 }
 
 .incorrect .input {
-	border: 3px solid #bb2929;
+    border: 3px solid #bb2929;
 }
 
 .date-form {
@@ -206,4 +207,23 @@ body {
 .new-iter-btn {
     position: absolute;
     bottom: 10%;
+}
+
+.botonera-padre {
+    width: 100%;
+    position: relative;
+    display: none;
+}
+
+.botonera-hijo {
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.menuBotones {
+    background-color: transparent;
+    border: none;
 }

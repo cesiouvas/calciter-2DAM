@@ -30,20 +30,38 @@ export async function showIter() {
     querySnapshot.forEach((doc) => {
         document.getElementById('iter' + cont).addEventListener('click', () => { getIter(doc.data()) })
         cont++
+        //Botón datos enseña la información del viaje
+        datos.addEventListener('click', () => {
+            getIter(doc.data())
+        })
     })
 }
 
 function getIter(iter) {
     let cad = ``
+    //Enseñar el menu de gastos y datos
+    let botoneraPadre = document.getElementById('botoneraPadre')
+    botoneraPadre.style.display = 'block'
 
-    cad += `<p>estoy dentro del viaje ${iter.iterId}</p>
-            <p>${iter.participants}<p>
-            <button id="menuIter">Juan</button>`
+    cad += `<br>
+            <p>estoy dentro del viaje ${iter.iterId}</p>
+            <p>${iter.participants}<p>`
 
     info.innerHTML = cad
-    menuIter.addEventListener('click', () => {
-        showIter()
-    })
 }
+
+//Nos devuelve a la pestaña donde se enseña la lista de viajes
+allIter.addEventListener('click', () => {
+    let botoneraPadre = document.getElementById('botoneraPadre')
+    botoneraPadre.style.display = 'none'
+    showIter()
+})
+
+//Enseña los gastos que se van haciendo en el viaje
+gastos.addEventListener('click', () => {
+    let cad = `<p>JUAN</p>`
+    info.innerHTML = cad
+})
+
 
 
