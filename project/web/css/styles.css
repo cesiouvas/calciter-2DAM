@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #a3c8d1;
+    background-color: #c6f1fc;
 }
 
 /* Colores de fondo */
@@ -16,7 +16,7 @@ body {
 }
 
 .bg-iter {
-    background-color: rgb(98, 158, 177);
+    background-color: rgb(106, 199, 228);
 }
 
 .bg-iter:hover {
@@ -226,4 +226,23 @@ body {
 .menuBotones {
     background-color: transparent;
     border: none;
+    color: rgb(255, 255, 255);
+}
+
+.menuBotones:hover {
+    color: #575757;
+}
+
+.bordeBotones {
+    text-decoration: underline;
+}
+
+.newGasto {
+    border-radius: 15px;
+    width: 50px;
+    position: absolute;
+    bottom: 10%;
+    right: 30%;
+    background-color: #8fd9e1;
+    border-color: black;
 }

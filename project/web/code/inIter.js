@@ -32,12 +32,15 @@ export async function showIter() {
         cont++
         //Botón datos enseña la información del viaje
         datos.addEventListener('click', () => {
+            gastos.classList.remove('bordeBotones')
+            datos.classList.add('bordeBotones')
             getIter(doc.data())
         })
     })
 }
 
 function getIter(iter) {
+    datos.classList.add('bordeBotones')
     let cad = ``
     //Enseñar el menu de gastos y datos
     let botoneraPadre = document.getElementById('botoneraPadre')
@@ -59,7 +62,9 @@ allIter.addEventListener('click', () => {
 
 //Enseña los gastos que se van haciendo en el viaje
 gastos.addEventListener('click', () => {
-    let cad = `<p>JUAN</p>`
+    gastos.classList.add('bordeBotones')
+    datos.classList.remove('bordeBotones')
+    let cad = `<button class="newGasto"><i class="fa-solid fa-plus" style="left:-10px"></i></button>`
     info.innerHTML = cad
 })
 

@@ -32,13 +32,14 @@
         </div>
     </nav>
 
-    <div class="container p-4" style="width: 75%;">
+    <div class="container p-4" style="width: 100%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
-            <div class="botonera-hijo">
-                <button id="allIter" style="margin-right: 35%" class="menuBotones"><i class="fa-solid fa-arrow-left" style="color: black;"></i></button>
+            <div class="botonera-hijo bg-dark" style="left: 50%; width: 105.5%; top: -40%;">
+                <button id="allIter" style="margin-right: 27%" class="menuBotones"><i
+                        class="fa-solid fa-arrow-left"></i></button>
                 <button id="gastos" style="margin-right: 15%" class="menuBotones">Gastos</button>
-                <button id="datos" class="menuBotones">Datos del viaje</button>
+                <button id="datos" class="menuBotones" style="margin-right: 25%">Datos del viaje</button>
             </div>
             <br>
         </div>
@@ -253,7 +254,8 @@
                                 <select class="date-form" name="paises" id="paises">
                                     <!-- Los paises se llenan con el js -->
                                 </select>
-                                <input type="text" class="date-form" id="ciudad" name="ciudad" placeholder="Ciudad/pueblo" required>
+                                <input type="text" class="date-form" id="ciudad" name="ciudad"
+                                    placeholder="Ciudad/pueblo" required>
                             </div>
 
                             <!-- Fecha de inicio y fin -->
@@ -272,13 +274,15 @@
 
                             <!-- ERROR: Campos vacíos -->
                             <div class="formulario-error" id="iter-vacio">
-                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: Rellena todos los campos
+                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: Rellena
+                                    todos los campos
                                 </p>
                             </div>
 
                             <!-- Viaje creado correctamente -->
                             <div class="form-enviado" id="iter-enviado">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Viaje creado correctamente</p>
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Viaje creado
+                                    correctamente</p>
                             </div>
                         </div>
                     </form>
@@ -287,8 +291,8 @@
         </div>
     </div>
 
-        <!-- ACCEDER A UN VIAJE -->
-        <div class="modal fade" id="accessIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
+    <!-- ACCEDER A UN VIAJE -->
+    <div class="modal fade" id="accessIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
@@ -307,19 +311,75 @@
                                     name="accessId" style="width: 100%;" required>
                             </div>
 
-                            <p class="mt-2 fw-light">Tienes que recibir un código de invitación para poder unirte a un viaje</p>
+                            <p class="mt-2 fw-light">Tienes que recibir un código de invitación para poder unirte a un
+                                viaje</p>
 
                             <button id="accessInvite" type="submit" class="btn mt-3 bg-dark"
                                 style="width: 100%; color: white;">Acceder al viaje</button>
 
                             <!-- ERROR: ID no existente -->
                             <div class="formulario-error" id="invalidId">
-                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La invitación no es correcta</p>
+                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La
+                                    invitación no es correcta</p>
                             </div>
 
                             <!-- ID correcto -->
                             <div class="form-enviado" id="validId">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje</p>
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crear Gasto -->
+    <div class="modal fade" id="newGastoModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 style="color: white;">Nuevo gasto</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newGastoForm">
+                        <div class="bg-box p-5 borde text-white">
+                            <!-- Nombre del gasto -->
+                            <div id="newGasto" style="margin-top: -10px">
+                                <label for="iter-name">Nombre del gasto</label>
+                                <input class="form-control" type="text" placeholder="Código de invitación" id="nameGasto"
+                                    name="accessId" style="width: 100%;" required>
+                            </div>
+
+                            <!-- Tipo de gasto -->
+                            <div id="newGasto" style="margin-top: -10px">
+                                <label for="selectTipo">Nombre del gasto</label>
+                                <select name="selectTipo" id="selectTipo">
+                                    <option value="comida">Comida</option>
+                                    <option value="alojamiento">Alojamiento</option>
+                                    <option value="actividades">Actividades</option>
+                                </select>
+                                <input class="form-control" type="text" placeholder="Código de invitación" id="nameGasto"
+                                    name="accessId" style="width: 100%;" required>
+                            </div>
+
+                            <button id="createGasto" type="submit" class="btn mt-3 bg-dark"
+                                style="width: 100%; color: white;">Acceder al viaje</button>
+
+                            <!-- ERROR: ID no existente -->
+                            <div class="formulario-error" id="errorGasto">
+                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La
+                                    invitación no es correcta</p>
+                            </div>
+
+                            <!-- ID correcto -->
+                            <div class="form-enviado" id="gastoCreated">
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje
+                                </p>
                             </div>
                         </div>
                     </form>

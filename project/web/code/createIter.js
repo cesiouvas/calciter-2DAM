@@ -203,4 +203,5 @@ accessInvite.addEventListener('click', async () => {
             console.log("La invitación no es correcta")
         }
     })
+    showIter()
 })
