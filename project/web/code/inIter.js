@@ -64,7 +64,7 @@ allIter.addEventListener('click', () => {
 gastos.addEventListener('click', () => {
     gastos.classList.add('bordeBotones')
     datos.classList.remove('bordeBotones')
-    let cad = `<button class="newGasto"><i class="fa-solid fa-plus" style="left:-10px"></i></button>`
+    let cad = `<button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button" class="btn btn-secondary newGasto"><i class="fa-solid fa-plus"></i></button>`
     info.innerHTML = cad
 })
 

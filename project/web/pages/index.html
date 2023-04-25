@@ -35,10 +35,10 @@
     <div class="container p-4" style="width: 100%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
-            <div class="botonera-hijo bg-dark" style="left: 50%; width: 105.5%; top: -40%;">
+            <div class="botonera-hijo bg-dark" style="left: 50%; width: 105.4%; top: -10%;">
                 <button id="allIter" style="margin-right: 27%" class="menuBotones"><i
                         class="fa-solid fa-arrow-left"></i></button>
-                <button id="gastos" style="margin-right: 15%" class="menuBotones">Gastos</button>
+                <button id="gastos" style="margin-right: 15%" class="menuBotones p-2">Gastos</button>
                 <button id="datos" class="menuBotones" style="margin-right: 25%">Datos del viaje</button>
             </div>
             <br>
@@ -74,7 +74,7 @@
                             <!-- TELÉFONO -->
                             <div class="input-group" id="input-telefono">
                                 <div class="input-group-text">
-                                    <img src="../img/user.png" alt="telefono" class="img-text" />
+                                    <img src="../img/telephone.png" alt="telefono" class="img-text" />
                                 </div>
                                 <div class="form_group">
                                     <input class="form-input" type="text" placeholder="Número de teléfono" id="telefono"
@@ -349,26 +349,26 @@
                     <form id="newGastoForm">
                         <div class="bg-box p-5 borde text-white">
                             <!-- Nombre del gasto -->
-                            <div id="newGasto" style="margin-top: -10px">
-                                <label for="iter-name">Nombre del gasto</label>
-                                <input class="form-control" type="text" placeholder="Código de invitación" id="nameGasto"
+                            <div id="name-gasto" style="margin-top: -10px">
+                                <label for="nameGasto">Nombre del gasto</label>
+                                <input class="form-control" type="text" placeholder="Nombre" id="nameGasto"
                                     name="accessId" style="width: 100%;" required>
                             </div>
 
                             <!-- Tipo de gasto -->
-                            <div id="newGasto" style="margin-top: -10px">
-                                <label for="selectTipo">Nombre del gasto</label>
-                                <select name="selectTipo" id="selectTipo">
+                            <div id="select-gasto" class="columna">
+                                <label for="priceGasto">Precio</label>
+                                <label for="precio" style="padding-left: 40%;">Precio</label>
+                                <select name="selectTipo" id="selectTipo" class="date-form">
                                     <option value="comida">Comida</option>
                                     <option value="alojamiento">Alojamiento</option>
                                     <option value="actividades">Actividades</option>
                                 </select>
-                                <input class="form-control" type="text" placeholder="Código de invitación" id="nameGasto"
-                                    name="accessId" style="width: 100%;" required>
+                                <input type="number" class="date-form" placeholder="Precio" id="priceGasto" name="priceGasto">
                             </div>
 
                             <button id="createGasto" type="submit" class="btn mt-3 bg-dark"
-                                style="width: 100%; color: white;">Acceder al viaje</button>
+                                style="width: 100%; color: white;">Nuevo gasto</button>
 
                             <!-- ERROR: ID no existente -->
                             <div class="formulario-error" id="errorGasto">

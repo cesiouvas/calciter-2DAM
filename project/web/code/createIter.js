@@ -51,6 +51,7 @@ onAuthStateChanged(auth, async (user) => {
 
         //Seleción de fechas
         dates.innerHTML = selectDates()
+        reponerFecha()
 
         console.log(auth.currentUser.email)
     } else { //No lo está
@@ -111,6 +112,16 @@ function selectDates() {
     }
     return cad
 }
+
+function reponerFecha() {
+    let startdate = document.getElementById('startdate')
+    startdate.addEventListener('blur', () => {
+        let endFecha = document.getElementById('enddate')
+
+        endFecha.min = startdate.value
+    })
+}
+
 
 //Se crea un nuevo viaje
 newIter.addEventListener('click', async (e) => {
