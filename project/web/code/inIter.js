@@ -41,6 +41,7 @@ export async function showIter() {
 
 function getIter(iter) {
     datos.classList.add('bordeBotones')
+    gastos.classList.remove('bordeBotones')
     let cad = ``
     //Enseñar el menu de gastos y datos
     let botoneraPadre = document.getElementById('botoneraPadre')
@@ -51,6 +52,7 @@ function getIter(iter) {
             <p>${iter.participants}<p>`
 
     info.innerHTML = cad
+    pagadorGasto(iter)
 }
 
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
@@ -68,5 +70,18 @@ gastos.addEventListener('click', () => {
     info.innerHTML = cad
 })
 
+//Rellena el select para seleccionar quien paga el gasto
+function pagadorGasto(datos) {
+    let selectPagador = document.getElementById('pagadoPor')
+    let participants = datos.participants 
+    let cad = ``
 
+    cad += `<option value="0">---Selecciona pagador</option>`
+
+    for (let i = 0; i < participants.length; i++) {
+        cad += `<option value="${participants[i]}">${participants[i]}</option>`
+    }
+
+    selectPagador.innerHTML = cad
+}
 

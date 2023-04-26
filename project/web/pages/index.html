@@ -335,15 +335,14 @@
         </div>
     </div>
 
-    <!-- Crear Gasto -->
-    <div class="modal fade" id="newGastoModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
-        aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- NUEVO GASTO -->
+    <div class="modal fade" id="newGastoModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h3 style="color: white;">Nuevo gasto</h3>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <h3 class="modal-title" style="color: white;">Nuevo gasto</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="newGastoForm">
@@ -356,15 +355,32 @@
                             </div>
 
                             <!-- Tipo de gasto -->
-                            <div id="select-gasto" class="columna">
-                                <label for="priceGasto">Precio</label>
-                                <label for="precio" style="padding-left: 40%;">Precio</label>
+                            <div id="select-gasto" class="columna mt-2">
+                                <label for="selectTipo">Tipo de gasto</label>
+                                <label for="precio" style="padding-left: 23%;">Precio</label>
                                 <select name="selectTipo" id="selectTipo" class="date-form">
+                                    <option value="0">---Selecciona tipo</option>
                                     <option value="comida">Comida</option>
+                                    <option value="cenaf">Cena fuera</option>
+                                    <option value="bebida">Bebidas</option>
                                     <option value="alojamiento">Alojamiento</option>
                                     <option value="actividades">Actividades</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="gasolina">Gasolina</option>
+                                    <option value="otros">Otros</option>
                                 </select>
-                                <input type="number" class="date-form" placeholder="Precio" id="priceGasto" name="priceGasto">
+                                <input type="number" class="date-form" placeholder="Precio" id="priceGasto"
+                                    name="priceGasto">
+                            </div>
+
+                            <div class="columna mt-2">
+                                <label for="pagadoPor">Pagado por</label>
+                                <label for="pagadoEntre" style="padding-left: 27%;">Pagado entre</label>
+                                <select name="pagadoPor" id="pagadoPor" class="date-form">
+                                    <!-- JS rellena los pagadores -->
+                                </select>
+                                <button class="btn btn-light selectionAmount" data-bs-target="#selectAmountModal"
+                                    data-bs-toggle="modal">Seleccionar</button>
                             </div>
 
                             <button id="createGasto" type="submit" class="btn mt-3 bg-dark"
@@ -383,6 +399,39 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="selectAmountModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: white;">Quienes pagan</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="selectAmountForm">
+                        <div class="bg-box p-5 borde text-white">
+                            <!-- Nombre del gasto -->
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                                    checked>
+                                <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#newGastoModal" data-bs-toggle="modal">Aceptar</button>
                 </div>
             </div>
         </div>
