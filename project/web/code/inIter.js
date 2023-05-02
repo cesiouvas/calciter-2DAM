@@ -1,5 +1,6 @@
 import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { auth, iterRef } from './firebase2.js'
+import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
 
@@ -19,9 +20,10 @@ export async function showIter() {
     })
 
     //Botón para crear viajes
-    cad += `<button id="newIter" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:16.5%; left:33%">Nuevo viaje</button>
-            <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:16.5%; right:33%">Acceder a un viaje</button>`
+    cad += `<button id="newIter" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
+            <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>`
 
+    //Mostrar los viajes por pantalla
     info.innerHTML = cad
 
     //Reseteo el contador para crear los eventos click
@@ -31,6 +33,7 @@ export async function showIter() {
         document.getElementById('iter' + cont).addEventListener('click', () => { getIter(doc.data()) })
         cont++
         //Botón datos enseña la información del viaje
+
         datos.addEventListener('click', () => {
             gastos.classList.remove('bordeBotones')
             datos.classList.add('bordeBotones')
@@ -53,6 +56,7 @@ function getIter(iter) {
 
     info.innerHTML = cad
     pagadorGasto(iter)
+    divisionPago(iter)
 }
 
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
@@ -73,7 +77,7 @@ gastos.addEventListener('click', () => {
 //Rellena el select para seleccionar quien paga el gasto
 function pagadorGasto(datos) {
     let selectPagador = document.getElementById('pagadoPor')
-    let participants = datos.participants 
+    let participants = datos.participants
     let cad = ``
 
     cad += `<option value="0">---Selecciona pagador</option>`

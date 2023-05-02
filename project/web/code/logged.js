@@ -5,6 +5,9 @@ import './register.js'
 const loggedIn = document.querySelectorAll('.logged-in')
 const loggedOut = document.querySelectorAll('.logged-out')
 
+const email = document.getElementById('login-email')
+const passwd = document.getElementById('login-passwd')
+
 const logout = document.querySelector('#logout')
 let info = document.getElementById('iter-info')
 let cad = ``
@@ -36,4 +39,6 @@ logout.addEventListener('click', async () => {
     await signOut(auth)
     info.innerHTML = cad
     console.log('El usuario ha cerrado sesión')
+    email.value = ""
+    passwd.value= ""
 })

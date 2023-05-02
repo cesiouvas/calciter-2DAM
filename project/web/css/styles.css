@@ -136,12 +136,11 @@ body {
 /* --- Error al completar el formulario --- */
 .formulario-error {
     height: 45px;
-    line-height: 45px;
     background: #ff0000;
     padding: 0 15px;
     border-radius: 3px;
     display: none;
-    width: 95%;
+    width: 100%;
     font-size: 12px;
 }
 
@@ -247,4 +246,24 @@ body {
 
 .selectionAmount {
     width: 48%;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

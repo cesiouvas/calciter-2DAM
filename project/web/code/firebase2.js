@@ -86,3 +86,15 @@ export async function newParticipant(email, iterId) {
     console.log(error)
   })
 }
+
+//Nuevo gasto
+export async function insertGasto(name, type, price, payer, paidBetween, iterId) {
+  await addDoc(collection(db, "gastos"), {
+    iterId: iterId,
+    name: name,
+    type: type,
+    price: price,
+    payer: payer,
+    paidBetween: paidBetween
+  })
+}
