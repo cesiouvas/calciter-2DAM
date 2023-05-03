@@ -1,6 +1,9 @@
 import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { auth, iterRef, selectUsuarios, usersRef } from './firebase2.js'
+<<<<<<< HEAD
 import { dataIter } from "./inIter.js"
+=======
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
 //Datos gasto
 let nameGasto = document.getElementById('nameGasto')
@@ -34,7 +37,10 @@ export async function divisionPago(datos) {
         }
     })
 
+<<<<<<< HEAD
     /* 
+=======
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     checkParts.addEventListener('change', () => {
         if (checkParts.checked) {
             cad = `<p>Selecciona la canidad de dinero que va a pagar cada uno</p>`
@@ -42,7 +48,10 @@ export async function divisionPago(datos) {
             console.log(infoPago)
         }
     })
+<<<<<<< HEAD
     */
+=======
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
     //No pagan todos, selecciona aquellos que no vayan a pagar
     checkSome.addEventListener('change', async () => {
@@ -95,12 +104,20 @@ function divideSome(value) {
             }
         }
     }
+<<<<<<< HEAD
 }
 
 //Convierte los nombres del array en el identificador (correo electrónico)
 async function nombreAEmail(pagadores) {
     let pagador
     let allPagadoresConfirm = false
+=======
+    console.log(noPayers)
+}
+
+async function nombreAEmail(pagadores) {
+    let pagador
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     let aux = []
     let allPagadores = []
     let noPagadoresArray = []
@@ -109,11 +126,15 @@ async function nombreAEmail(pagadores) {
 
     //Recoge todos los participantes del viaje
     allPagadores = datosViaje.participants
+<<<<<<< HEAD
 
     //Guardo los participantes en un auxiliar por si acaso da error
     for (let i = 0; i < allPagadores.length; i++) {
         aux.push(allPagadores[i])
     }
+=======
+    aux = allPagadores
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
     //Cambia el nombre y el apellido de los participantes por el correo electrónico
     for (let i = 0; i < pagadores.length; i++) {
@@ -136,6 +157,7 @@ async function nombreAEmail(pagadores) {
             }
         }
     }
+<<<<<<< HEAD
 
     //Si los participantes que van a pagar son 0 no se puede pagar
     if (allPagadores.length == 0) {
@@ -143,11 +165,18 @@ async function nombreAEmail(pagadores) {
             allPagadores.push(aux[i])
         }
 
+=======
+    console.log(allPagadores)
+
+    if (allPagadores.length == 0) {
+        allPagadores = aux
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
         //Si no está completo sale un error
         document.getElementById('participantsNull').classList.add('formulario-error-activo')
         setTimeout(() => {
             document.getElementById('participantsNull').classList.remove('formulario-error-activo')
         }, 5000)
+<<<<<<< HEAD
         allPagadoresConfirm = false
     } else {
         allPagadoresConfirm = true
@@ -157,6 +186,14 @@ async function nombreAEmail(pagadores) {
 
 function savePago() {
     let allPagadoresConfirm = false
+=======
+        
+    }
+
+}
+
+function savePago() {
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     //Datos del formulario
     let name = nameGasto.value
     let tipo = selectTipo.value
@@ -164,6 +201,7 @@ function savePago() {
     let paidBy = pagadoPor.value
 
     if (cantidad == 2) {
+<<<<<<< HEAD
         allPagadoresConfirm = nombreAEmail(noPayers)
     }
 
@@ -173,15 +211,25 @@ function savePago() {
     } else if (allPagadoresConfirm.PromiseResult == false) {
         console.log("mano falso")
     }
+=======
+        nombreAEmail(noPayers)
+    }
+
+
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
 
 
 }
 
 prueba.addEventListener('click', () => {
+<<<<<<< HEAD
 
     document.getElementById('participantsNull').classList.remove('formulario-error-activo')
     savePago()
 
+=======
+    savePago()
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 })
 

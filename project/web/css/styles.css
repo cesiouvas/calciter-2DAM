@@ -266,6 +266,7 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+<<<<<<< HEAD
 }
 
 /* Estilos checkbox */
@@ -304,4 +305,6 @@ input[type="checkbox"] + label:before {
 
 input[type="checkbox"]:checked + label:before {
 	border-color: #0fbf12;
+=======
+>>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 }
