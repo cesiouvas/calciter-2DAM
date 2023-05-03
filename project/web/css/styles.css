@@ -136,12 +136,11 @@ body {
 /* --- Error al completar el formulario --- */
 .formulario-error {
     height: 45px;
-    line-height: 45px;
     background: #ff0000;
     padding: 0 15px;
     border-radius: 3px;
     display: none;
-    width: 95%;
+    width: 100%;
     font-size: 12px;
 }
 
@@ -247,4 +246,62 @@ body {
 
 .selectionAmount {
     width: 48%;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Estilos checkbox */
+input[type="checkbox"] + label {
+    font-weight: bold;
+    line-height: 3em;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label:after {
+    content: "";
+    width: 12px;
+    height: 6px;
+    border: 4px solid #0fbf12;
+    float: left;
+    margin-left: -1.7em;
+    border-right: 0;
+    border-top: 0;
+    margin-top: 1em;
+    transform: rotate(-55deg);
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input[type="checkbox"] + label:before {
+	content: "";
+	width: 26px;
+	height: 26px;
+	float: left;
+	margin: 0.5em 0.5em 0 0;
+	border: 2px solid #ccc;
+	background: #fff;
+}
+
+input[type="checkbox"]:checked + label:before {
+	border-color: #0fbf12;
 }

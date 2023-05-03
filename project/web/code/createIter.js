@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.18.0/fi
 import { showIter } from './inIter.js'
 
 import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
 let dates = document.getElementById('dates')
@@ -54,6 +55,8 @@ onAuthStateChanged(auth, async (user) => {
         reponerFecha()
 
         console.log(auth.currentUser.email)
+        
+        //divisionPago()
     } else { //No lo está
         cad = ``
         info.innerHTML = cad
@@ -96,19 +99,40 @@ function selectDates() {
         case 7:
         case 8:
         case 9:
-            //startDate es la fecha actual
-            startDate = year + "-0" + month + "-" + day
-            //endDate es la fecha actual + 1
-            endDate = year + "-0" + month + "-" + (day + 1)
-            cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
+            switch (day) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    //startDate es la fecha actual
+                    startDate = year + "-0" + month + "-" + 0 + day
+                    //endDate es la fecha actual + 1
+                    endDate = year + "-0" + month + "-" + 0 + (day + 1)
+                    cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
                     <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
-            break;
+                    break
+                default:
+                    //startDate es la fecha actual
+                    startDate = year + "-0" + month + "-" + day
+                    //endDate es la fecha actual + 1
+                    endDate = year + "-0" + month + "-" + (day + 1)
+                    cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
+                        <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
+                    break
+            }
+            break
+
         default:
             startDate = year + "-" + month + "-" + day
             endDate = year + "-" + month + "-" + (day + 1)
             cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
                     <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
-            break;
+            break
     }
     return cad
 }
@@ -121,7 +145,6 @@ function reponerFecha() {
         endFecha.min = startdate.value
     })
 }
-
 
 //Se crea un nuevo viaje
 newIter.addEventListener('click', async (e) => {
@@ -187,7 +210,7 @@ async function saveIter() {
                 cont = false
             } else {
                 cont = true
-            }
+            }   
         })
     } while (cont)
 

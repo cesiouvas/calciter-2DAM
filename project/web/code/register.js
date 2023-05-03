@@ -3,12 +3,10 @@ import { auth, guardar } from './firebase2.js'
 
 //Parametros de register.html
 let btnRegister = document.getElementById("btnRegister")
-let usuarioExiste = document.getElementById("usuario-existe")
 
 //Campos de formulario
 let name1 = document.getElementById('name')
 let surname = document.getElementById('surname')
-let username = document.getElementById('username')
 let email = document.getElementById('email')
 let passwd = document.getElementById('passwd')
 let confpasswd = document.getElementById('confpasswd')

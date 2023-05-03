@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
-<body style="width: 50%; margin: 0 auto;">
+<body >
 
     <!-- Menú superior -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -32,14 +32,14 @@
         </div>
     </nav>
 
-    <div class="container p-4" style="width: 100%;">
+    <div class="container p-4" style="width: 100%; margin-bottom: 20%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
-            <div class="botonera-hijo bg-dark" style="left: 50%; width: 105.4%; top: -10%;">
-                <button id="allIter" style="margin-right: 27%" class="menuBotones"><i
+            <div class="botonera-hijo bg-dark" style="width: 120%; top: -15%; left: 50%;">
+                <button id="allIter" style="margin-right: 22%" class="menuBotones"><i
                         class="fa-solid fa-arrow-left"></i></button>
                 <button id="gastos" style="margin-right: 15%" class="menuBotones p-2">Gastos</button>
-                <button id="datos" class="menuBotones" style="margin-right: 25%">Datos del viaje</button>
+                <button id="datos" class="menuBotones">Datos del viaje</button>
             </div>
             <br>
         </div>
@@ -360,14 +360,14 @@
                                 <label for="precio" style="padding-left: 23%;">Precio</label>
                                 <select name="selectTipo" id="selectTipo" class="date-form">
                                     <option value="0">---Selecciona tipo</option>
-                                    <option value="comida">Comida</option>
-                                    <option value="cenaf">Cena fuera</option>
-                                    <option value="bebida">Bebidas</option>
-                                    <option value="alojamiento">Alojamiento</option>
-                                    <option value="actividades">Actividades</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="gasolina">Gasolina</option>
-                                    <option value="otros">Otros</option>
+                                    <option value="1">Comida</option>
+                                    <option value="2">Cena fuera</option>
+                                    <option value="3">Bebidas</option>
+                                    <option value="4">Alojamiento</option>
+                                    <option value="5">Actividades</option>
+                                    <option value="6">Transporte</option>
+                                    <option value="7">Gasolina</option>
+                                    <option value="8">Otros</option>
                                 </select>
                                 <input type="number" class="date-form" placeholder="Precio" id="priceGasto"
                                     name="priceGasto">
@@ -386,14 +386,13 @@
                             <button id="createGasto" type="submit" class="btn mt-3 bg-dark"
                                 style="width: 100%; color: white;">Nuevo gasto</button>
 
-                            <!-- ERROR: ID no existente -->
-                            <div class="formulario-error" id="errorGasto">
-                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La
-                                    invitación no es correcta</p>
+                            <!-- ERROR: Tienen que haber participantes para pagar -->
+                            <div class="formulario-error mt-2" id="participantsNull">
+                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: Tienen que haber participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
                             </div>
 
                             <!-- ID correcto -->
-                            <div class="form-enviado" id="gastoCreated">
+                            <div class="form-enviado mt-2" id="gastoCreated">
                                 <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje
                                 </p>
                             </div>
@@ -415,23 +414,24 @@
                 <div class="modal-body">
                     <form id="selectAmountForm">
                         <div class="bg-box p-5 borde text-white">
-                            <!-- Nombre del gasto -->
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
-                                    checked>
-                                <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+                            <!-- Cuantos pagan -->
+                            <div class="btn-group" role="group">
+                                <!-- Entre todos -->
+                                <input type="radio" class="btn-check" name="btnradio" id="todos" autocomplete="off">
+                                <label class="btn btn-outline-light" for="todos">Entre todos</label>
+                                <!-- No todos -->
+                                <input type="radio" class="btn-check" name="btnradio" id="noTodos" autocomplete="off">
+                                <label class="btn btn-outline-light" for="noTodos">No pagan todos</label>
+                            </div>
+                            <!-- Informacion del pago -->
+                            <div id="infoPago" class="container p-3">
+                                <!-- Quienes van a pagar -->
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#newGastoModal" data-bs-toggle="modal">Aceptar</button>
+                    <button id="prueba" class="btn btn-primary" data-bs-target="#newGastoModal" data-bs-toggle="modal">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -446,6 +446,7 @@
     <script src="../code/logged.js" type="module"></script>
     <script src="../code/login.js" type="module"></script>
     <script src="../code/createIter.js" type="module"></script>
+    <script src="../code/gasto.js" type="module"></script>
 </body>
 
 </html>
