@@ -4,7 +4,6 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.18.0/fi
 import { showIter } from './inIter.js'
 
 import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
 let dates = document.getElementById('dates')
@@ -18,7 +17,7 @@ const inputs = document.querySelectorAll("#new-iter-form input")
 
 //Acceder a un viaje
 let accessId = document.getElementById('accessId')
-let accessInvite = document.getElementById('accessInvite')
+let inviteButton = document.getElementById('inviteButton')
 
 //Validar campos
 const camposValidados = {
@@ -55,7 +54,7 @@ onAuthStateChanged(auth, async (user) => {
         reponerFecha()
 
         console.log(auth.currentUser.email)
-        
+
         //divisionPago()
     } else { //No lo está
         cad = ``
@@ -112,7 +111,7 @@ function selectDates() {
                     //startDate es la fecha actual
                     startDate = year + "-0" + month + "-" + 0 + day
                     //endDate es la fecha actual + 1
-                    endDate = year + "-0" + month + "-" + 0 + (day + 1)
+                    endDate = year + "-0" + month + "-" + 0 + day
                     cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
                     <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
                     break
@@ -120,7 +119,7 @@ function selectDates() {
                     //startDate es la fecha actual
                     startDate = year + "-0" + month + "-" + day
                     //endDate es la fecha actual + 1
-                    endDate = year + "-0" + month + "-" + (day + 1)
+                    endDate = year + "-0" + month + "-" + day
                     cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
                         <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
                     break
@@ -129,7 +128,7 @@ function selectDates() {
 
         default:
             startDate = year + "-" + month + "-" + day
-            endDate = year + "-" + month + "-" + (day + 1)
+            endDate = year + "-" + month + "-" + day
             cad = `<input class="date-form" type="date" id="startdate" name="startdate" value="${startDate}" min="${startDate}" required>
                     <input class="date-form" type="date" id="enddate" name="enddate" min="${endDate}" required>`
             break
@@ -210,32 +209,46 @@ async function saveIter() {
                 cont = false
             } else {
                 cont = true
-            }   
+            }
         })
     } while (cont)
 
     insertIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
-    setIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
 }
 
 //Acceder a un viaje mediante código
-accessInvite.addEventListener('click', async () => {
+inviteButton.addEventListener('click', async (e) => {
+    e.preventDefault()
     let inviteId = accessId.value
     let email = auth.currentUser.email
+    let idNoValid = false
 
     let qIter = query(iterRef)
     let querySnapshot = await getDocs(qIter)
     let a = []
 
+    //Comprueba que la invitación sea válida y que el usuario no esté en el viaje
     querySnapshot.forEach((doc) => {
         if (doc.data().iterId == inviteId) {
-            a = doc.data().participants
-            a.push(auth.currentUser.email)
-            console.log(a)
-            newParticipant(a, doc.id)
+            if (doc.data().participants.includes(email)) {
+                console.log("que hago")
+            } else {
+                a = doc.data().participants
+                a.push(email)
+                console.log(a)
+                newParticipant(a, doc.id)
+                idNoValid = false
+            }
         } else {
-            console.log("La invitación no es correcta")
+            //Si no está completo sale un error
+            document.getElementById('invalidId').classList.add('formulario-error-activo')
+            setTimeout(() => {
+                document.getElementById('invalidId').classList.remove('formulario-error-activo')
+            }, 5000)
         }
     })
-    showIter()
+    setTimeout(() => {
+        showIter()
+    }, 4000)
+    
 })

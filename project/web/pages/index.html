@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
-<body >
+<body>
 
     <!-- Menú superior -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -314,18 +314,23 @@
                             <p class="mt-2 fw-light">Tienes que recibir un código de invitación para poder unirte a un
                                 viaje</p>
 
-                            <button id="accessInvite" type="submit" class="btn mt-3 bg-dark"
+                            <button id="inviteButton" type="submit" class="btn mt-2 bg-dark"
                                 style="width: 100%; color: white;">Acceder al viaje</button>
 
                             <!-- ERROR: ID no existente -->
-                            <div class="formulario-error" id="invalidId">
-                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: La
+                            <div class="formulario-error mt-2" id="invalidId">
+                                <p class="p-1"><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: La
                                     invitación no es correcta</p>
+                            </div>
+
+                            <!-- ERROR: Usuario ya está en el viaje -->
+                            <div class="formulario-error mt-2" id="userExistsInIter">
+                                <p class="p-1"><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: el usuario ya está en el viaje</p>
                             </div>
 
                             <!-- ID correcto -->
                             <div class="form-enviado" id="validId">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje
+                                <p class="mt-2"><i class="fa-solid fa-check" style="width: 100%;"></i> Has accedido al viaje
                                 </p>
                             </div>
                         </div>
@@ -342,7 +347,8 @@
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Nuevo gasto</h3>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="newGastoForm">
@@ -388,11 +394,8 @@
 
                             <!-- ERROR: Tienen que haber participantes para pagar -->
                             <div class="formulario-error mt-2" id="participantsNull">
-<<<<<<< HEAD
-                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: Tienen que haber participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
-=======
-                                <p><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: Tienen que haber participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
+                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: Tienen que haber
+                                    participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
                             </div>
 
                             <!-- ID correcto -->
@@ -413,7 +416,8 @@
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Quienes pagan</h3>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="selectAmountForm">
@@ -423,29 +427,20 @@
                                 <!-- Entre todos -->
                                 <input type="radio" class="btn-check" name="btnradio" id="todos" autocomplete="off">
                                 <label class="btn btn-outline-light" for="todos">Entre todos</label>
-<<<<<<< HEAD
-=======
-                                <!-- Partes -->
-                                <input type="radio" class="btn-check" name="btnradio" id="partes" autocomplete="off">
-                                <label class="btn btn-outline-light" for="partes">Pagado por partes</label>
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
                                 <!-- No todos -->
                                 <input type="radio" class="btn-check" name="btnradio" id="noTodos" autocomplete="off">
                                 <label class="btn btn-outline-light" for="noTodos">No pagan todos</label>
                             </div>
                             <!-- Informacion del pago -->
                             <div id="infoPago" class="container p-3">
-<<<<<<< HEAD
                                 <!-- Quienes van a pagar -->
-=======
-
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button id="prueba" class="btn btn-primary" data-bs-target="#newGastoModal" data-bs-toggle="modal">Aceptar</button>
+                    <button id="acceptPayers" class="btn btn-primary" data-bs-target="#newGastoModal"
+                        data-bs-toggle="modal">Aceptar</button>
                 </div>
             </div>
         </div>

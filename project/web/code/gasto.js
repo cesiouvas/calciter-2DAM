@@ -1,9 +1,6 @@
 import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { auth, iterRef, selectUsuarios, usersRef } from './firebase2.js'
-<<<<<<< HEAD
 import { dataIter } from "./inIter.js"
-=======
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
 //Datos gasto
 let nameGasto = document.getElementById('nameGasto')
@@ -18,11 +15,13 @@ let checkParts = document.getElementById('partes')
 let checkSome = document.getElementById('noTodos')
 let infoPago = document.getElementById('infoPago')
 
-let prueba = document.getElementById('prueba')
+let acceptPayers = document.getElementById('acceptPayers')
 
 let noPayers = []
 let cantidad
 let datosViaje
+let allPagadoresConfirm = false
+let payersToDB = []
 
 export async function divisionPago(datos) {
     let cad = ``
@@ -37,10 +36,7 @@ export async function divisionPago(datos) {
         }
     })
 
-<<<<<<< HEAD
     /* 
-=======
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     checkParts.addEventListener('change', () => {
         if (checkParts.checked) {
             cad = `<p>Selecciona la canidad de dinero que va a pagar cada uno</p>`
@@ -48,10 +44,7 @@ export async function divisionPago(datos) {
             console.log(infoPago)
         }
     })
-<<<<<<< HEAD
     */
-=======
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
     //No pagan todos, selecciona aquellos que no vayan a pagar
     checkSome.addEventListener('change', async () => {
@@ -84,6 +77,12 @@ export async function divisionPago(datos) {
             cantidad = 2
         }
     })
+
+    //Cuando le demos al botón de aceptar y volvamos al modal del gasto comprobará si los participantes a pagar son correctos o no
+    acceptPayers.addEventListener('click', () => {
+        document.getElementById('participantsNull').classList.remove('formulario-error-activo')
+        savePago()
+    })
 }
 
 //Divide el dinero del gasto entre los participantes que vayan a pagar
@@ -104,20 +103,11 @@ function divideSome(value) {
             }
         }
     }
-<<<<<<< HEAD
 }
 
 //Convierte los nombres del array en el identificador (correo electrónico)
 async function nombreAEmail(pagadores) {
     let pagador
-    let allPagadoresConfirm = false
-=======
-    console.log(noPayers)
-}
-
-async function nombreAEmail(pagadores) {
-    let pagador
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     let aux = []
     let allPagadores = []
     let noPagadoresArray = []
@@ -126,15 +116,11 @@ async function nombreAEmail(pagadores) {
 
     //Recoge todos los participantes del viaje
     allPagadores = datosViaje.participants
-<<<<<<< HEAD
 
     //Guardo los participantes en un auxiliar por si acaso da error
     for (let i = 0; i < allPagadores.length; i++) {
         aux.push(allPagadores[i])
     }
-=======
-    aux = allPagadores
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
 
     //Cambia el nombre y el apellido de los participantes por el correo electrónico
     for (let i = 0; i < pagadores.length; i++) {
@@ -157,43 +143,32 @@ async function nombreAEmail(pagadores) {
             }
         }
     }
-<<<<<<< HEAD
 
+    console.log(allPagadores)
     //Si los participantes que van a pagar son 0 no se puede pagar
     if (allPagadores.length == 0) {
+        console.log(allPagadores)
         for (let i = 0; i < aux.length; i++) {
             allPagadores.push(aux[i])
         }
 
-=======
-    console.log(allPagadores)
-
-    if (allPagadores.length == 0) {
-        allPagadores = aux
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
         //Si no está completo sale un error
         document.getElementById('participantsNull').classList.add('formulario-error-activo')
         setTimeout(() => {
             document.getElementById('participantsNull').classList.remove('formulario-error-activo')
         }, 5000)
-<<<<<<< HEAD
         allPagadoresConfirm = false
     } else {
+        //Guardamos los pagadores en un array esterno que enviaremos a la base de datos
+        for (let i = 0; i < allPagadores.length; i++) {
+            payersToDB.push(allPagadores[i])
+        }
         allPagadoresConfirm = true
+        savePago()
     }
-    return allPagadoresConfirm
 }
 
 function savePago() {
-    let allPagadoresConfirm = false
-=======
-        
-    }
-
-}
-
-function savePago() {
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
     //Datos del formulario
     let name = nameGasto.value
     let tipo = selectTipo.value
@@ -201,35 +176,17 @@ function savePago() {
     let paidBy = pagadoPor.value
 
     if (cantidad == 2) {
-<<<<<<< HEAD
-        allPagadoresConfirm = nombreAEmail(noPayers)
+
+        console.log(allPagadoresConfirm)
+
+        if (allPagadoresConfirm == true) {
+            
+        } else if (allPagadoresConfirm == false) {
+            //Se vuelve a llamar a la función que pasa de nombre y apellido a email, sino no se podrán guardar los datos
+            nombreAEmail(noPayers)
+        }
     }
-
-    console.log(allPagadoresConfirm)
-    if (allPagadoresConfirm.PromiseResult == true) {
-        console.log("juan")
-    } else if (allPagadoresConfirm.PromiseResult == false) {
-        console.log("mano falso")
-    }
-=======
-        nombreAEmail(noPayers)
-    }
-
-
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
-
-
-
 }
 
-prueba.addEventListener('click', () => {
-<<<<<<< HEAD
 
-    document.getElementById('participantsNull').classList.remove('formulario-error-activo')
-    savePago()
-
-=======
-    savePago()
->>>>>>> 6e20a4828695e9b3dd7fb84b07ce51bddc0eb0a0
-})
 

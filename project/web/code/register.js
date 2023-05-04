@@ -182,8 +182,6 @@ const registrar = () => {
     const passwd = registerForm['passwd']
 
     guardar(name.value, surname.value, telefono.value, email.value, passwd.value, "usuario")
-
-
     //Crea una transacción para guardar los datos
     /* 
     let transaction = { name: name.value, surname: surname.value, username: username.value, email: email.value, passwd: passwd.value }
