@@ -319,18 +319,18 @@
 
                             <!-- ERROR: ID no existente -->
                             <div class="formulario-error mt-2" id="invalidId">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: La
+                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: La
                                     invitación no es correcta</p>
                             </div>
 
                             <!-- ERROR: Usuario ya está en el viaje -->
                             <div class="formulario-error mt-2" id="userExistsInIter">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: el usuario ya está en el viaje</p>
+                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: el usuario ya está en el viaje</p>
                             </div>
 
                             <!-- ID correcto -->
-                            <div class="form-enviado" id="validId">
-                                <p class="mt-2"><i class="fa-solid fa-check" style="width: 100%;"></i> Has accedido al viaje
+                            <div class="form-enviado mt-2" id="validId">
+                                <p class="p-1"><i class="fa-solid fa-check"></i> Has accedido al viaje correctamente
                                 </p>
                             </div>
                         </div>
@@ -357,7 +357,7 @@
                             <div id="name-gasto" style="margin-top: -10px">
                                 <label for="nameGasto">Nombre del gasto</label>
                                 <input class="form-control" type="text" placeholder="Nombre" id="nameGasto"
-                                    name="accessId" style="width: 100%;" required>
+                                    name="nameGasto" style="width: 100%;" required>
                             </div>
 
                             <!-- Tipo de gasto -->
@@ -385,7 +385,7 @@
                                 <select name="pagadoPor" id="pagadoPor" class="date-form">
                                     <!-- JS rellena los pagadores -->
                                 </select>
-                                <button class="btn btn-light selectionAmount" data-bs-target="#selectAmountModal"
+                                <button id="participantsPay" class="btn btn-light selectionAmount" data-bs-target="#selectAmountModal"
                                     data-bs-toggle="modal">Seleccionar</button>
                             </div>
 
@@ -398,10 +398,19 @@
                                     participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
                             </div>
 
+                            <!-- ERROR: Selecciona los participantes -->
+                            <div class="formulario-error mt-2" id="selectParticipants">
+                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: Selecciona cuantos participantes van a pagar</p>
+                            </div>
+
+                            <!-- ERROR: No se ha creado -->
+                            <div class="formulario-error mt-2" id="gastoNotCreated">
+                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: El gasto no se ha podido crear, prueba a rellenar todos los campos</p>
+                            </div>
+
                             <!-- ID correcto -->
                             <div class="form-enviado mt-2" id="gastoCreated">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Estás dentro del viaje
-                                </p>
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> El gasto se ha creado correctamente</p>
                             </div>
                         </div>
                     </form>

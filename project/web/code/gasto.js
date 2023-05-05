@@ -1,6 +1,5 @@
-import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef, selectUsuarios, usersRef } from './firebase2.js'
-import { dataIter } from "./inIter.js"
+import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { usersRef, gastosRef, insertGasto } from './firebase2.js'
 
 //Datos gasto
 let nameGasto = document.getElementById('nameGasto')
@@ -15,24 +14,65 @@ let checkParts = document.getElementById('partes')
 let checkSome = document.getElementById('noTodos')
 let infoPago = document.getElementById('infoPago')
 
+let participantsPay = document.getElementById('participantsPay')
+
 let acceptPayers = document.getElementById('acceptPayers')
+const inputs = document.querySelectorAll("#newGastoForm input")
 
 let noPayers = []
-let cantidad
+let opc = 0
 let datosViaje
 let allPagadoresConfirm = false
 let payersToDB = []
+let allPagadores
 
+const camposValidados = {
+    nameGasto: false,
+    selectTipo: false,
+    priceGasto: false,
+    pagadoPor: false
+}
+
+participantsPay.addEventListener('click', (e) => {
+    e.preventDefault()
+})
+
+//Validar campos del formulario
+function validateForm(e) {
+    if (e.target.value.length == 0) {
+        camposValidados[e.target.name] = false
+    } else {
+        camposValidados[e.target.name] = true
+    }
+}
+
+//Llama a la función validateForm por cada vez que se clicka
+inputs.forEach((input) => {
+    input.addEventListener('keyup', validateForm)
+    input.addEventListener('blur', validateForm)
+})
+
+//Dependiendo de la selección que se haga se divide el pago entre los participantes
 export async function divisionPago(datos) {
     let cad = ``
     let part = datos.participants
     datosViaje = datos
+    let aux = []
 
+    //Todos pagan por igual
     checkAll.addEventListener('change', () => {
         if (checkAll.checked) {
             cad = `<p>El gasto se dividirá entre todos los participantes del viaje equitativamente</p>`
             infoPago.innerHTML = cad
-            console.log(infoPago)
+            //Recoge todos los participantes del viaje
+            allPagadores = datosViaje.participants
+
+            //Guardo los participantes en un auxiliar por si acaso da error
+            for (let i = 0; i < allPagadores.length; i++) {
+                aux.push(allPagadores[i])
+            }
+            opc = 1
+            console.log(allPagadores)
         }
     })
 
@@ -74,14 +114,16 @@ export async function divisionPago(datos) {
                     divideSome('check' + i)
                 })
             }
-            cantidad = 2
+            opc = 2
+
+            //Cuando le demos al botón de aceptar y volvamos al modal del gasto comprobará si los participantes a pagar son correctos o no
+
         }
     })
 
-    //Cuando le demos al botón de aceptar y volvamos al modal del gasto comprobará si los participantes a pagar son correctos o no
+    //Elimina el mensaje de error
     acceptPayers.addEventListener('click', () => {
         document.getElementById('participantsNull').classList.remove('formulario-error-activo')
-        savePago()
     })
 }
 
@@ -168,25 +210,98 @@ async function nombreAEmail(pagadores) {
     }
 }
 
-function savePago() {
+//Comprueba que los datos son correctos si es la opción 2, sino inserta los valores directamente
+function savePago(e) {
+    if (opc == 2) {
+        if (allPagadoresConfirm == true) {
+            insertValues(e)
+        } else if (allPagadoresConfirm == false) {
+            //Se vuelve a llamar a la función que pasa de nombre y apellido a email, sino no se podrán guardar los datos
+            nombreAEmail(noPayers)
+        }
+    } else if (opc == 1) {
+        insertValues(e)
+    } else if (opc == 0) {
+        //Si no está completo sale un error
+        document.getElementById('selectParticipants').classList.add('formulario-error-activo')
+        setTimeout(() => {
+            document.getElementById('selectParticipants').classList.remove('formulario-error-activo')
+        }, 5000)
+    }
+}
+
+//Cuando se hace clic en el boton de nuevo gasto llamamos a la funcion savePago
+crearGasto.addEventListener('click', (e) => {
+    savePago(e)
+})
+
+function insertValues(e) {
+    try {
+        if (camposValidados.nameGasto && camposValidados.priceGasto) {
+            e.preventDefault()
+
+            createGasto()
+
+            //Reiniciar valores de los campos
+            nameGasto.value = ""
+            selectTipo.value = 0
+            priceGasto.value = ""
+            pagadoPor.value = 0
+            allPagadores = datosViaje.participants
+
+            //Poner a false todos los campos
+            for (let i = 0; i < camposValidados.length; i++) {
+                camposValidados[i] = false
+            }
+
+            console.log(allPagadores)
+            console.log(camposValidados)
+            //Mensaje que confirma que se ha creado el usuario
+            document.getElementById('gastoCreated').classList.add('form-enviado-activo')
+            //El mensaje se eliminará después de 5 segundos
+            setTimeout(() => {
+                document.getElementById('gastoCreated').classList.remove('form-enviado-activo')
+            }, 5000)
+
+        } else {
+            //Si no está completo sale un error
+            document.getElementById('gastoNotCreated').classList.add('formulario-error-activo')
+            setTimeout(() => {
+                document.getElementById('gastoNotCreated').classList.remove('formulario-error-activo')
+            }, 5000)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//Crear gastos y añadirlos a la base de datos
+async function createGasto() {
     //Datos del formulario
     let name = nameGasto.value
     let tipo = selectTipo.value
     let price = priceGasto.value
     let paidBy = pagadoPor.value
+    let gastoId
 
-    if (cantidad == 2) {
+    //Query para sacar las IDs
+    let qGasto = query(gastosRef)
+    let querySnapshot = await getDocs(qGasto)
+    let cont = true
+    console.log(datosViaje)
 
-        console.log(allPagadoresConfirm)
+    do {
+        //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes
+        gastoId = Math.floor(Math.random() * 10000000)
+        console.log(gastoId)
+        querySnapshot.forEach((doc) => {
+            if (doc.data().gastoId != gastoId) {
+                cont = false
+            } else {
+                cont = true
+            }
+        })
+    } while (cont)
 
-        if (allPagadoresConfirm == true) {
-            
-        } else if (allPagadoresConfirm == false) {
-            //Se vuelve a llamar a la función que pasa de nombre y apellido a email, sino no se podrán guardar los datos
-            nombreAEmail(noPayers)
-        }
-    }
+    insertGasto(name, tipo, price, paidBy, allPagadores, datosViaje.iterId, gastoId)
 }
-
-
-

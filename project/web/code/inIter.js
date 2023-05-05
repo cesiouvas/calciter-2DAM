@@ -1,5 +1,5 @@
 import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef } from './firebase2.js'
+import { auth, iterRef, usersRef } from './firebase2.js'
 import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
@@ -82,16 +82,23 @@ gastos.addEventListener('click', () => {
 })
 
 //Rellena el select para seleccionar quien paga el gasto
-function pagadorGasto(datos) {
+async function pagadorGasto(datos) {
     let selectPagador = document.getElementById('pagadoPor')
     let participants = datos.participants
+    let q = query(usersRef)
+    let querySnapshot = await getDocs(q)
     let cad = ``
 
     cad += `<option value="0">---Selecciona pagador</option>`
 
-    for (let i = 0; i < participants.length; i++) {
-        cad += `<option value="${participants[i]}">${participants[i]}</option>`
-    }
+    querySnapshot.forEach((doc) => {
+        for (let i = 0; i < participants.length; i++) {
+            if (doc.data().email == participants[i]) {
+                cad += `<option value="${participants[i]}">${doc.data().name} ${doc.data().surname}</option>`
+
+            }
+        }
+    })
 
     selectPagador.innerHTML = cad
 }

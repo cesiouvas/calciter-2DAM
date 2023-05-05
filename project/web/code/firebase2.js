@@ -30,6 +30,7 @@ const db = getFirestore(app)
 export const usersRef = collection(db, "usuarios")
 export const iterRef = collection(db, "viajes")
 export const paisRef = collection(db, "paises")
+export const gastosRef = collection(db, "gastos")
 
 //Insertar usuarios en la db
 export async function guardar(name, surname, telefono, email, passwd, rol) {
@@ -88,13 +89,14 @@ export async function newParticipant(email, iterId) {
 }
 
 //Nuevo gasto
-export async function insertGasto(name, type, price, payer, paidBetween, iterId) {
+export async function insertGasto(name, type, price, paidBy, payers, iterId, gastoId) {
   await addDoc(collection(db, "gastos"), {
     iterId: iterId,
     name: name,
     type: type,
     price: price,
-    payer: payer,
-    paidBetween: paidBetween
+    paidBy: paidBy,
+    payers: payers,
+    gastoId: gastoId
   })
 }

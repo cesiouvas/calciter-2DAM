@@ -25,10 +25,12 @@ const camposValidados = {
     iterdesc: false,
 }
 
+//Validar campos del formulario
 function validateForm(e) {
-    if (e.target.value != "" || e.target.value != null) {
+    if (e.target.value.length == 0) {
+        camposValidados[e.target.name] = false
+    } else {
         camposValidados[e.target.name] = true
-        console.log(camposValidados)
     }
 }
 
@@ -222,6 +224,7 @@ inviteButton.addEventListener('click', async (e) => {
     let inviteId = accessId.value
     let email = auth.currentUser.email
     let idNoValid = false
+    let access = false
 
     let qIter = query(iterRef)
     let querySnapshot = await getDocs(qIter)
@@ -231,24 +234,33 @@ inviteButton.addEventListener('click', async (e) => {
     querySnapshot.forEach((doc) => {
         if (doc.data().iterId == inviteId) {
             if (doc.data().participants.includes(email)) {
-                console.log("que hago")
+                idNoValid = true
             } else {
                 a = doc.data().participants
                 a.push(email)
-                console.log(a)
                 newParticipant(a, doc.id)
-                idNoValid = false
+                access = true
             }
-        } else {
-            //Si no está completo sale un error
-            document.getElementById('invalidId').classList.add('formulario-error-activo')
-            setTimeout(() => {
-                document.getElementById('invalidId').classList.remove('formulario-error-activo')
-            }, 5000)
         }
     })
+
+    //Si da error
+    if (access) {
+        document.getElementById('validId').classList.add('form-enviado-activo')
+        //El mensaje se eliminará después de 5 segundos
+        setTimeout(() => {
+            document.getElementById('validId').classList.remove('form-enviado-activo')
+        }, 5000)
+    } else if (idNoValid) {
+        //Si no está completo sale un error
+        document.getElementById('invalidId').classList.add('formulario-error-activo')
+        setTimeout(() => {
+            document.getElementById('invalidId').classList.remove('formulario-error-activo')
+        }, 5000)
+    }
+
+    //Temporizador para cargar los nuevos viajes después de un segundo
     setTimeout(() => {
         showIter()
-    }, 4000)
-    
+    }, 1000)
 })
