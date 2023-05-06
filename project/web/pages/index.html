@@ -13,7 +13,7 @@
 <body>
 
     <!-- Menú superior -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark" style="position: fixed; width: 100%;">
         <div class="container">
             <a class="navbar-brand" href="/">Calciter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -31,11 +31,12 @@
             </div>
         </div>
     </nav>
+    <br><br>
 
     <div class="container p-4" style="width: 100%; margin-bottom: 20%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
-            <div class="botonera-hijo bg-dark" style="width: 120%; top: -15%; left: 50%;">
+            <div class="botonera-hijo bg-dark" style="width: 100%; top: -15%; left: 50%;">
                 <button id="allIter" style="margin-right: 22%" class="menuBotones"><i
                         class="fa-solid fa-arrow-left"></i></button>
                 <button id="gastos" style="margin-right: 15%" class="menuBotones p-2">Gastos</button>
@@ -47,6 +48,13 @@
         <div class="row" id="iter-info">
             <!-- Viajes del usuario actual -->
         </div>
+    </div>
+
+    <div class="container" style="position: fixed; bottom: 10%;">
+        <button id="newIterButton" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button"
+            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
+        <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button"
+            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>
     </div>
 
     <!-- Modales -->
@@ -325,7 +333,8 @@
 
                             <!-- ERROR: Usuario ya está en el viaje -->
                             <div class="formulario-error mt-2" id="userExistsInIter">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: el usuario ya está en el viaje</p>
+                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: el usuario ya está en
+                                    el viaje</p>
                             </div>
 
                             <!-- ID correcto -->
@@ -385,8 +394,8 @@
                                 <select name="pagadoPor" id="pagadoPor" class="date-form">
                                     <!-- JS rellena los pagadores -->
                                 </select>
-                                <button id="participantsPay" class="btn btn-light selectionAmount" data-bs-target="#selectAmountModal"
-                                    data-bs-toggle="modal">Seleccionar</button>
+                                <button id="participantsPay" class="btn btn-light selectionAmount"
+                                    data-bs-target="#selectAmountModal" data-bs-toggle="modal">Seleccionar</button>
                             </div>
 
                             <button id="createGasto" type="submit" class="btn mt-3 bg-dark"
@@ -400,17 +409,20 @@
 
                             <!-- ERROR: Selecciona los participantes -->
                             <div class="formulario-error mt-2" id="selectParticipants">
-                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: Selecciona cuantos participantes van a pagar</p>
+                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: Selecciona cuantos
+                                    participantes van a pagar</p>
                             </div>
 
                             <!-- ERROR: No se ha creado -->
                             <div class="formulario-error mt-2" id="gastoNotCreated">
-                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: El gasto no se ha podido crear, prueba a rellenar todos los campos</p>
+                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: El gasto no se ha
+                                    podido crear, prueba a rellenar todos los campos</p>
                             </div>
 
                             <!-- ID correcto -->
                             <div class="form-enviado mt-2" id="gastoCreated">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> El gasto se ha creado correctamente</p>
+                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> El gasto se ha creado
+                                    correctamente</p>
                             </div>
                         </div>
                     </form>

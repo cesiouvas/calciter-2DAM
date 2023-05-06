@@ -18,6 +18,7 @@ const inputs = document.querySelectorAll("#new-iter-form input")
 //Acceder a un viaje
 let accessId = document.getElementById('accessId')
 let inviteButton = document.getElementById('inviteButton')
+let newIter = document.getElementById('newIter')
 
 //Validar campos
 const camposValidados = {
@@ -160,7 +161,8 @@ newIter.addEventListener('click', async (e) => {
             name.value = ""
             desc.value = ""
             ciudad.value = ""
-            pais.value = ""
+            pais.value = 0
+            selectDates()
 
             camposValidados['itername'] = false
             camposValidados['iterdesc'] = false

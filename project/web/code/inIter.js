@@ -21,9 +21,7 @@ export async function showIter() {
     })
 
     //Botón para crear viajes
-    cad += `<button id="newIter" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
-            <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button" class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>`
-
+   
     //Mostrar los viajes por pantalla
     info.innerHTML = cad
 
