@@ -61,7 +61,13 @@ export async function divisionPago(datos) {
     let aux = []
 
     for (let i = 0; i < part.length; i++) {
-        allPagadores.push(part[i])
+        if (allPagadores.length >= part.length) {
+            //No guarda pagadores
+        } else {
+            //Guarda pagadores
+            allPagadores.push(part[i])
+        }
+        
     }
     console.log(allPagadores)
 
