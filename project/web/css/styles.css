@@ -241,7 +241,15 @@ body {
     width: 50px;
     position: absolute;
     bottom: 10%;
-    right: 30%;
+    right: 20%;
+}
+
+.deudas {
+    border-radius: 15px;
+    width: 20%px;
+    position: absolute;
+    bottom: 10%;
+    left: 20%;
 }
 
 .selectionAmount {
@@ -304,4 +312,8 @@ input[type="checkbox"] + label:before {
 
 input[type="checkbox"]:checked + label:before {
 	border-color: #0fbf12;
+}
+
+.gastoImg {
+    width: 40px;
 }

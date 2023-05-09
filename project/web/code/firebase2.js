@@ -25,7 +25,7 @@ export const auth = getAuth(app)
 
 const analytics = getAnalytics(app)
 
-const db = getFirestore(app)
+export const db = getFirestore(app)
 
 export const usersRef = collection(db, "usuarios")
 export const iterRef = collection(db, "viajes")

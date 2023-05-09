@@ -10,7 +10,6 @@ let crearGasto = document.getElementById('createGasto')
 
 //Division pago
 let checkAll = document.getElementById('todos')
-let checkParts = document.getElementById('partes')
 let checkSome = document.getElementById('noTodos')
 let infoPago = document.getElementById('infoPago')
 
@@ -67,9 +66,8 @@ export async function divisionPago(datos) {
             //Guarda pagadores
             allPagadores.push(part[i])
         }
-        
+
     }
-    console.log(allPagadores)
 
     //Todos pagan por igual
     checkAll.addEventListener('change', (e) => {
@@ -123,7 +121,6 @@ export async function divisionPago(datos) {
             });
             cad += `</div>`
             infoPago.innerHTML = cad
-            console.log(cad)
 
             //Crea evento listenner para cada checkbox
             for (let i = 1; i < cont; i++) {
@@ -224,8 +221,14 @@ async function nameTransform() {
     } else {
         //Guardamos los pagadores en un array esterno que enviaremos a la base de datos
         for (let i = 0; i < allPagadores.length; i++) {
-            payersToDB.push(allPagadores[i])
+            if (payersToDB.includes(allPagadores[i])) {
+                //No hace nada
+            } else {
+                payersToDB.push(allPagadores[i])
+            }
+
         }
+        console.log(payersToDB)
         allPagadoresConfirm = true
     }
 }
@@ -275,9 +278,15 @@ function insertValues(e) {
                 selectTipo.value = 0
                 priceGasto.value = ""
                 pagadoPor.value = 0
-                allPagadores = datosViaje.participants
+
+                for (let i = 0; i < datosViaje.participants.length; i++) {
+                    if (allPagadores.includes(datosViaje.participants[i])) {
+                        //No hace nada
+                    } else {
+                        allPagadores.push(datosViaje.participants[i])
+                    }
+                }
                 console.log(allPagadores)
-                payersToDB = []
 
                 //Poner a false todos los campos
                 for (let i = 0; i < camposValidados.length; i++) {
@@ -286,14 +295,16 @@ function insertValues(e) {
                 }
 
                 //Resetea las checkboxes
-                for (let i = 1; i < resetCheck; i++) {
-                    let checkToReset = document.getElementById('check' + i)
-                    if (checkToReset.checked) {
-                        checkToReset.checked = false
+                if (opc == 2) {
+                    for (let i = 1; i < resetCheck; i++) {
+                        let checkToReset = document.getElementById('check' + i)
+                        if (checkToReset.checked) {
+                            checkToReset.checked = false
+                        }
                     }
                 }
                 resetCheck = 0
-            }, 1000)
+            }, 2000)
 
             //Mensaje que confirma que se ha creado el usuario
             document.getElementById('gastoCreated').classList.add('form-enviado-activo')
@@ -328,6 +339,7 @@ async function createGasto() {
     let querySnapshot = await getDocs(qGasto)
     let cont = true
     console.log(datosViaje)
+    console.log(payersToDB)
 
     do {
         //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes
@@ -343,4 +355,5 @@ async function createGasto() {
 
     //Insertar gasto en la base de datos
     insertGasto(name, tipo, price, paidBy, payersToDB, datosViaje.iterId, gastoId)
+    payersToDB = []
 }

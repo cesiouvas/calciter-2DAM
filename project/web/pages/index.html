@@ -431,6 +431,7 @@
         </div>
     </div>
 
+    <!-- Cantidad de gente que va a pagar -->
     <div class="modal fade" id="selectAmountModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -458,6 +459,34 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="acceptPayers" class="btn btn-primary" data-bs-target="#newGastoModal"
+                        data-bs-toggle="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deudas -->
+    <div class="modal fade" id="deudasModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: white;">Tus deudas</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="bg-box p-5 borde text-white">
+                        <div class="btn-group" role="group">
+                            <p>Debes dinero a: </p>
+                        </div>
+                        <div id="deudasGroup" class="container p-3">
+                            <!-- A quien le debes x dinero -->
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button id="acceptPayers" class="btn btn-primary" data-bs-target="#newGastoModal"

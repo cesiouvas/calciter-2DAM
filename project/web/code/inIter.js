@@ -1,11 +1,12 @@
-import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef, usersRef } from './firebase2.js'
+import { getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { auth, iterRef, usersRef, gastosRef, db } from './firebase2.js'
 import { divisionPago } from './gasto.js'
-import { showGastos } from './showGasto.js'
+//import { showGastos } from './showGasto.js'
 
 let info = document.getElementById('iter-info')
-let data
 let newIterButtons = document.getElementById('newIterButtons')
+let prueba = 1
+let dataIter
 
 //Función que enseña los viajes del usuario actual
 export async function showIter() {
@@ -31,62 +32,82 @@ export async function showIter() {
     querySnapshot.forEach((doc) => {
         document.getElementById('iter' + cont).addEventListener('click', () => { getIter(doc.data()) })
         cont++
-        //Botón datos enseña la información del viaje
-
-        datos.addEventListener('click', () => {
-            gastos.classList.remove('bordeBotones')
-            datos.classList.add('bordeBotones')
-            getIter(doc.data())
-            
-        })
-        //Enseña los gastos que se van haciendo en el viaje
-        /* 
-        gastos.addEventListener('click', () => {
-            getGasto(doc.data())
-        })
-        */
     })
 }
 
-function getGasto(iter) {
+datos.addEventListener('click', () => {
+    gastos.classList.remove('bordeBotones')
+    datos.classList.add('bordeBotones')
+    getIter(dataIter)
+    divisionPago(dataIter)
+
+})
+
+function getGasto() {
+    let gastosViaje = document.getElementById('gastosViaje')
+    let datosViaje = document.getElementById('datosViaje')
     gastos.classList.add('bordeBotones')
     datos.classList.remove('bordeBotones')
-    let cad = `<div class="container" id="showGastos">
-                </div>
-                <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button" class="btn btn-secondary newGasto"><i class="fa-solid fa-plus"></i></button>`
-    info.innerHTML = cad
-    console.log(info)
-
-    showGastos(iter)
+    gastosViaje.style.display = 'block'
+    datosViaje.style.display = 'none'
 
     datos.addEventListener('click', () => {
-        getIter(iter)
+        getIter(dataIter)
     })
 }
 
 //Enseña los datos del viaje
-function getIter(iter) {
+async function getIter(iter) {
     datos.classList.add('bordeBotones')
     gastos.classList.remove('bordeBotones')
     let cad = ``
+    
     //Enseñar el menu de gastos y datos
     let botoneraPadre = document.getElementById('botoneraPadre')
     botoneraPadre.style.display = 'block'
     newIterButtons.style.display = 'none'
-    console.log(iter.iterId)
 
     cad += `<br>
-            <p>estoy dentro del viaje ${iter.iterId}</p>
-            <p>${iter.participants}<p>`
+            <div id="datosViaje">
+                <p>estoy dentro del viaje ${iter.iterId}</p>
+                <p>${iter.participants}<p>
+            </div>`
+
+
+    let qGastos = query(gastosRef)
+    let querySnapshot = await getDocs(qGastos)
+
+    cad += `<div id="gastosViaje">`
+
+    //Muestra los gastos por pantalla
+    querySnapshot.forEach((doc) => {
+        if (doc.data().iterId == iter.iterId) {
+            cad += `<div id="${doc.data().gastoId}" class="rounded border border-dark mt-3 bg-iter" style="padding: 10px">
+                        <img src="../img/${doc.data().type}.png" class="gastoImg">
+                        <p>${doc.data().name}</p>
+                        <p>${doc.data().price}€</p>
+                        <p>${doc.data().paidBy}</p>
+                    </div>`
+        }
+    })
+
+    cad += `<button id="deudas" data-bs-toggle="modal" data-bs-target="#deudasModal" type="button" class="btn btn-secondary deudas">Deudas</button>
+            <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button" class="btn btn-secondary newGasto"><i class="fa-solid fa-plus"></i></button></div>`
 
     info.innerHTML = cad
+
+    let gastosViaje = document.getElementById('gastosViaje')
+    gastosViaje.style.display = 'none'
     pagadorGasto(iter)
-    divisionPago(iter)
+
+    dataIter = iter
 
     gastos.addEventListener('click', () => {
-        getGasto(iter)
+        divisionPago(dataIter)
+        getGasto()
     })
 }
+
 
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
 allIter.addEventListener('click', () => {
