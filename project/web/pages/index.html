@@ -33,7 +33,7 @@
     </nav>
     <br><br>
 
-    <div class="container p-4" style="width: 100%; margin-bottom: 20%;">
+    <div class="container p-4" style="width: 110%; margin-bottom: 20%; position: fixed; margin-left: 7%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
             <div class="botonera-hijo bg-dark" style="width: 100%; top: -15%; left: 50%;">
@@ -44,17 +44,24 @@
             </div>
             <br>
         </div>
-
-        <div class="row" id="iter-info">
-            <!-- Viajes del usuario actual -->
-        </div>
     </div>
 
-    <div id="newIterButtons" class="container" style="position: fixed; bottom: 10%; left: 13%;">
+    <div class="row" id="iter-info" style="width: 80%; margin-left: 10%; margin-top: 2%; margin-bottom: 5%;">
+        <!-- Viajes del usuario actual -->
+    </div>
+
+    <div id="newIterButtons" class="container" style="position: fixed; bottom: 10%; left: 5%;">
         <button id="newIterButton" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button"
             class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
         <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button"
             class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>
+    </div>
+
+    <div id="gastosButtons" class="container" style="position: fixed; bottom: 5%; left: -5%; display: none;">
+        <button id="deudas" data-bs-toggle="modal" data-bs-target="#deudasModal" type="button"
+            class="btn btn-secondary deudas" style="left: 30%;">Deudas</button>
+        <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button"
+            class="btn btn-secondary newGasto" style="right: 10%;"><i class="fa-solid fa-plus"></i></button>
     </div>
 
     <!-- Modales -->

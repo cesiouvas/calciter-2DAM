@@ -1,5 +1,6 @@
 import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { usersRef, gastosRef, insertGasto } from './firebase2.js'
+import { getIter, getDatos } from './inIter.js'
 
 //Datos gasto
 let nameGasto = document.getElementById('nameGasto')
@@ -25,6 +26,7 @@ let allPagadoresConfirm = false
 let payersToDB = []
 let allPagadores = []
 let resetCheck = 1
+let dataNewGasto
 
 const camposValidados = {
     nameGasto: false,
@@ -58,6 +60,7 @@ export async function divisionPago(datos) {
     let part = datos.participants
     datosViaje = datos
     let aux = []
+    dataNewGasto = datos
 
     for (let i = 0; i < part.length; i++) {
         if (allPagadores.length >= part.length) {
@@ -87,16 +90,6 @@ export async function divisionPago(datos) {
             console.log(allPagadores)
         }
     })
-
-    /* 
-    checkParts.addEventListener('change', () => {
-        if (checkParts.checked) {
-            cad = `<p>Selecciona la canidad de dinero que va a pagar cada uno</p>`
-            infoPago.innerHTML = cad
-            console.log(infoPago)
-        }
-    })
-    */
 
     //No pagan todos, selecciona aquellos que no vayan a pagar
     checkSome.addEventListener('change', async (e) => {
@@ -304,7 +297,10 @@ function insertValues(e) {
                     }
                 }
                 resetCheck = 0
-            }, 2000)
+                
+                //Gasto creado
+                getIter(dataNewGasto)
+            }, 2000)            
 
             //Mensaje que confirma que se ha creado el usuario
             document.getElementById('gastoCreated').classList.add('form-enviado-activo')

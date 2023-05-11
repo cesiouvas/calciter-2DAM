@@ -36,30 +36,32 @@ export async function showIter() {
 }
 
 datos.addEventListener('click', () => {
-    gastos.classList.remove('bordeBotones')
-    datos.classList.add('bordeBotones')
-    getIter(dataIter)
     divisionPago(dataIter)
-
+    getDatos()
 })
 
-function getGasto() {
+//Enseña los datos del viaje cuando hacemos click
+export function getDatos() {
     let gastosViaje = document.getElementById('gastosViaje')
     let datosViaje = document.getElementById('datosViaje')
-    gastos.classList.add('bordeBotones')
-    datos.classList.remove('bordeBotones')
-    gastosViaje.style.display = 'block'
-    datosViaje.style.display = 'none'
+    let gastosButtons = document.getElementById('gastosButtons')
+    gastosButtons.style.display = 'none'
+    datos.classList.add('bordeBotones')
+    gastos.classList.remove('bordeBotones')
+    datosViaje.style.display = 'block'
+    gastosViaje.style.display = 'none'
 
-    datos.addEventListener('click', () => {
+    gastos.addEventListener('click', () => {
         getIter(dataIter)
     })
 }
 
 //Enseña los datos del viaje
-async function getIter(iter) {
-    datos.classList.add('bordeBotones')
-    gastos.classList.remove('bordeBotones')
+export async function getIter(iter) {
+    let gastosButtons = document.getElementById('gastosButtons')
+    gastosButtons.style.display = 'block'
+    gastos.classList.add('bordeBotones')
+    datos.classList.remove('bordeBotones')
     let cad = ``
     
     //Enseñar el menu de gastos y datos
@@ -69,6 +71,7 @@ async function getIter(iter) {
 
     cad += `<br>
             <div id="datosViaje">
+            <br>
                 <p>estoy dentro del viaje ${iter.iterId}</p>
                 <p>${iter.participants}<p>
             </div>`
@@ -91,20 +94,21 @@ async function getIter(iter) {
         }
     })
 
-    cad += `<button id="deudas" data-bs-toggle="modal" data-bs-target="#deudasModal" type="button" class="btn btn-secondary deudas">Deudas</button>
-            <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button" class="btn btn-secondary newGasto"><i class="fa-solid fa-plus"></i></button></div>`
+    cad += `</div>`
 
     info.innerHTML = cad
 
+
+    let datosViajeDiv = document.getElementById('datosViaje')
     let gastosViaje = document.getElementById('gastosViaje')
-    gastosViaje.style.display = 'none'
+    datosViajeDiv.style.display = 'none'
     pagadorGasto(iter)
 
     dataIter = iter
 
-    gastos.addEventListener('click', () => {
+    datos.addEventListener('click', () => {
         divisionPago(dataIter)
-        getGasto()
+        getDatos()
     })
 }
 
@@ -112,8 +116,10 @@ async function getIter(iter) {
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
 allIter.addEventListener('click', () => {
     let botoneraPadre = document.getElementById('botoneraPadre')
+    let gastosButtons = document.getElementById('gastosButtons')
+    gastosButtons.style.display = 'none'
     botoneraPadre.style.display = 'none'
-    newIterButtons.style.display = 'block '
+    newIterButtons.style.display = 'block'
     showIter()
 })
 
