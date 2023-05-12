@@ -33,11 +33,11 @@
     </nav>
     <br><br>
 
-    <div class="container p-4" style="width: 110%; margin-bottom: 20%; position: fixed; margin-left: 7%;">
+    <div class="container p-4" style="width: 160%; top: 4%; position: fixed; left: -5%;">
         <!-- Menu viajes -->
         <div class="botonera-padre" id="botoneraPadre">
-            <div class="botonera-hijo bg-dark" style="width: 100%; top: -15%; left: 50%;">
-                <button id="allIter" style="margin-right: 22%" class="menuBotones"><i
+            <div class="bg-dark" style="width: 110%;">
+                <button id="allIter" style="margin-right: 22%; margin-left: 5%" class="menuBotones"><i
                         class="fa-solid fa-arrow-left"></i></button>
                 <button id="gastos" style="margin-right: 15%" class="menuBotones p-2">Gastos</button>
                 <button id="datos" class="menuBotones">Datos del viaje</button>
@@ -50,6 +50,7 @@
         <!-- Viajes del usuario actual -->
     </div>
 
+    <!-- Botones de la lista de viajes -->
     <div id="newIterButtons" class="container" style="position: fixed; bottom: 10%; left: 5%;">
         <button id="newIterButton" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button"
             class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
@@ -57,10 +58,11 @@
             class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>
     </div>
 
+    <!-- Botones dentro de un gasto -->
     <div id="gastosButtons" class="container" style="position: fixed; bottom: 5%; left: -5%; display: none;">
         <button id="deudas" data-bs-toggle="modal" data-bs-target="#deudasModal" type="button"
             class="btn btn-secondary deudas" style="left: 30%;">Deudas</button>
-        <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button"
+        <button id="newGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button"
             class="btn btn-secondary newGasto" style="right: 10%;"><i class="fa-solid fa-plus"></i></button>
     </div>
 

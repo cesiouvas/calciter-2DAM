@@ -1,5 +1,5 @@
-import { getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef, usersRef, gastosRef, db } from './firebase2.js'
+import { getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { auth, iterRef, usersRef, gastosRef } from './firebase2.js'
 import { divisionPago } from './gasto.js'
 //import { showGastos } from './showGasto.js'
 
@@ -12,7 +12,7 @@ let dataIter
 export async function showIter() {
     let cad = ``
     let cont = 1
-    let q = query(iterRef, where("participants", "array-contains", auth.currentUser.email))
+    let q = query(iterRef, where("participants", "array-contains", auth.currentUser.email), orderBy("startDate"))
     let querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) => {
@@ -35,6 +35,7 @@ export async function showIter() {
     })
 }
 
+//Click para ver los datos del
 datos.addEventListener('click', () => {
     divisionPago(dataIter)
     getDatos()
@@ -56,6 +57,45 @@ export function getDatos() {
     })
 }
 
+async function calcGastos(dataIter) {
+    let deudas = document.getElementById('deudasGroup')
+    let cad = ``
+    let gasto = 0
+
+    let q = query(gastosRef, where("payers", "array-contains", auth.currentUser.email), where("iterId", "==", dataIter.iterId))
+    let querySnapshot = await getDocs(q)
+
+
+
+    for (let i = 0; i < dataIter.participants.length; i++) {
+        console.log(dataIter.participants[i])
+
+        let qUsers = query(usersRef, where("email", "==", dataIter.participants[i]))
+        let querySnapUsers = await getDocs(qUsers)
+
+        let q = query(gastosRef, where("paidBy", "==", dataIter.participants[i]), where("iterId", "==", dataIter.iterId))
+        let querySnapt = await getDocs(q)
+
+        querySnapUsers.forEach((docUser) => {
+            cad += `<p>${docUser.data().name} ${docUser.data().surname}:`
+            querySnapt.forEach((docPaid) => {
+                if (docPaid.data().payers.includes(auth.currentUser.email)) {
+                    if (docPaid.data().paidBy == auth.currentUser.email) {
+                        console.log(docPaid.data().paidBy)
+                    } else {
+                       gasto += docPaid.data().price / docPaid.data().payers.length 
+                    }
+                }
+                console.log(gasto)
+            });
+            cad += ` ${gasto}</p>`
+            gasto = 0
+            deudas.innerHTML = cad
+        })
+    }
+    console.log(cad)
+}
+
 //Enseña los datos del viaje
 export async function getIter(iter) {
     let gastosButtons = document.getElementById('gastosButtons')
@@ -63,7 +103,9 @@ export async function getIter(iter) {
     gastos.classList.add('bordeBotones')
     datos.classList.remove('bordeBotones')
     let cad = ``
-    
+
+    divisionPago(iter)
+
     //Enseñar el menu de gastos y datos
     let botoneraPadre = document.getElementById('botoneraPadre')
     botoneraPadre.style.display = 'block'
@@ -98,13 +140,13 @@ export async function getIter(iter) {
 
     info.innerHTML = cad
 
-
     let datosViajeDiv = document.getElementById('datosViaje')
-    let gastosViaje = document.getElementById('gastosViaje')
     datosViajeDiv.style.display = 'none'
     pagadorGasto(iter)
 
     dataIter = iter
+
+    calcGastos(dataIter)
 
     datos.addEventListener('click', () => {
         divisionPago(dataIter)

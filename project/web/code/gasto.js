@@ -123,9 +123,6 @@ export async function divisionPago(datos) {
                 resetCheck++
             }
             opc = 2
-
-            //Cuando le demos al botón de aceptar y volvamos al modal del gasto comprobará si los participantes a pagar son correctos o no
-
         }
     })
 
@@ -154,7 +151,6 @@ function divideSome(value) {
             }
         }
     }
-    console.log(noPayers)
 }
 
 //Convierte los nombres del array en el identificador (correo electrónico)
@@ -173,7 +169,6 @@ async function nameTransform() {
     for (let i = 0; i < allPagadores.length; i++) {
         aux.push(allPagadores[i])
     }
-    console.log(noPayers)
 
     //Cambia el nombre y el apellido de los participantes por el correo electrónico
     for (let i = 0; i < noPayers.length; i++) {
@@ -212,7 +207,7 @@ async function nameTransform() {
         }, 5000)
         allPagadoresConfirm = false
     } else {
-        //Guardamos los pagadores en un array esterno que enviaremos a la base de datos
+        //Guardamos los pagadores en un array externo que enviaremos a la base de datos
         for (let i = 0; i < allPagadores.length; i++) {
             if (payersToDB.includes(allPagadores[i])) {
                 //No hace nada

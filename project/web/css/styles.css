@@ -209,8 +209,7 @@ body {
 }
 
 .botonera-padre {
-    width: 100%;
-    position: relative;
+    width: 150%;
     display: none;
 }
 
