@@ -13,21 +13,16 @@
 <body>
 
     <!-- Menú superior -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark" style="position: fixed; width: 100%;">
+    <nav class="navbar navbar-expand bg-dark navbar-dark" style="position: fixed; width: 100%;">
         <div class="container">
-            <a class="navbar-brand" href="/">Calciter</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link logged-out" href="#" data-bs-toggle="modal" data-bs-target="#signinModal">Iniciar
-                        sesión</a>
-                    <a class="nav-link logged-out" href="#" data-bs-toggle="modal"
-                        data-bs-target="#signupModal">Registrarse</a>
-                    <a class="nav-link logged-in" href="#" id="logout">Cerrar sesión</a>
-                </div>
+            <a class="navbar-brand" href="index.html">Calciter</a>
+            <div class="navbar-nav">
+                <a class="nav-link logged-out" href="#" data-bs-toggle="modal" data-bs-target="#signinModal">Iniciar
+                    sesión</a>
+                <a class="nav-link logged-out" href="#" data-bs-toggle="modal"
+                    data-bs-target="#signupModal">Registrarse</a>
+                <a class="nav-link logged-in" id="userInfo" data-bs-toggle="modal" data-bs-target="#userDataModal"></a>
+                <a class="nav-link logged-in" href="#" id="logout">Cerrar sesión</a>
             </div>
         </div>
     </nav>
@@ -163,6 +158,73 @@
                             <div>
                                 <button id="btnRegister" type="button" class="btn bg-dark mt-4"
                                     style="width: 97%; color: white;">Registrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER INFORMATION -->
+    <div class="modal fade" id="userDataModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 style="color: white;">Actualizar datos</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-5">
+                    <form id="update-form">
+                        <div class="bg-box p-5 borde text-white" style="width: 100%;">
+                            <!-- NAME & SURNAME -->
+                            <div class="columna">
+                                <input style="margin-right: 3px; width: 45%;" class="form-input-column" type="text"
+                                    placeholder="Nombre" id="dataName" name="dataName">
+                                <input class="form-input-column" type="text" placeholder="Apellido" id="dataSurname"
+                                    name="dataSurname" style="width: 45%;">
+                            </div>
+                            <br>
+                            <!-- TELÉFONO -->
+                            <div class="input-group" id="update-telefono">
+                                <div class="input-group-text">
+                                    <img src="../img/telephone.png" alt="telefono" class="img-text" />
+                                </div>
+                                <div class="form_group">
+                                    <input class="form-input" type="text" placeholder="Número de teléfono"
+                                        id="dataTelefono" name="dataTelefono" style="width: 100%;">
+                                </div>
+                                <i style="right: 30px" class="validacion-estado fas fa-times-circle"></i>
+                                <br>
+                            </div>
+                            <!-- EMAIL -->
+                            <div class="input-group mt-4" id="update-email">
+                                <div class="form_group">
+                                    <p id="dataEmail"></p>
+                                </div>
+                            </div>
+
+
+                            <!-- ERROR: Campos vacíos
+                            <div class="formulario-error" id="formulario-error">
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: rellena todos los campos por favor
+                                </p>
+                            </div>
+
+                            <div class="formulario-error" id="usuario-existe">
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: El usuario ya existe
+                                </p>
+                            </div>
+
+                            <div class="form-enviado" id="form-enviado">
+                                <p><i class="fa-solid fa-check"></i> Usuario creado correctamente</p>
+                            </div>
+                            -->
+                            <div>
+                                <button id="updateData" type="button" class="btn bg-dark mt-4"
+                                    style="width: 97%; color: white;">Actualizar datos</button>
                             </div>
                         </div>
                     </form>

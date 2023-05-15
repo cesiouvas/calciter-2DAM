@@ -16,9 +16,13 @@ export async function showIter() {
     let querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) => {
-        cad += `<div id="iter${cont}" class="rounded border border-dark mt-3 bg-iter">
-                    <p class="mt-2">${doc.data().description}</p>
-                    <p style="right: 50%; top: 11.5%">${doc.data().startDate}</p>
+        cad += `<div id="iter${cont}" class="rounded border border-dark mt-3 bg-iter" style="height: 70px">
+        <table style="height: 70px">
+            <td>${doc.data().description}</td>
+            <td style="width: 30%">${doc.data().startDate} - ${doc.data().endDate}</td>
+            <td>${doc.data().country} - ${doc.data().city}</td>
+        </table>
+                    
                 </div>`
         cont++
     })

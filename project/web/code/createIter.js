@@ -19,6 +19,7 @@ const inputs = document.querySelectorAll("#new-iter-form input")
 let accessId = document.getElementById('accessId')
 let inviteButton = document.getElementById('inviteButton')
 let newIter = document.getElementById('newIter')
+let userInfo = document.getElementById('userInfo')
 
 //Validar campos
 const camposValidados = {
@@ -55,8 +56,8 @@ onAuthStateChanged(auth, async (user) => {
         //Seleción de fechas
         dates.innerHTML = selectDates()
         reponerFecha()
-
-        console.log(auth.currentUser.email)
+            
+        userInfo.innerHTML = auth.currentUser.email
 
         //divisionPago()
     } else { //No lo está

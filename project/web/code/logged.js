@@ -17,6 +17,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         //Llama al método que comprueba si existe
         loginCheck(user)
+        
     } else { //No lo está
         loginCheck(user)
     }
