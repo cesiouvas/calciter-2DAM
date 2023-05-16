@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <!-- Menú superior -->
     <nav class="navbar navbar-expand bg-dark navbar-dark" style="position: fixed; width: 100%;">
         <div class="container">
@@ -46,11 +45,11 @@
     </div>
 
     <!-- Botones de la lista de viajes -->
-    <div id="newIterButtons" class="container" style="position: fixed; bottom: 10%; left: 5%;">
+    <div id="newIterButtons" class="container" style="position: fixed; bottom: 5%; left: 5%;">
         <button id="newIterButton" data-bs-toggle="modal" data-bs-target="#newIterModal" type="button"
-            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:18%">Nuevo viaje</button>
+            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; left:10%">Nuevo viaje</button>
         <button id="accessIter" data-bs-toggle="modal" data-bs-target="#accessIterModal" type="button"
-            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:18%">Acceder a un viaje</button>
+            class="btn btn-secondary mt-4 new-iter-btn" style="width:30%; right:10%">Acceder a un viaje</button>
     </div>
 
     <!-- Botones dentro de un gasto -->
@@ -172,19 +171,24 @@
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h3 style="color: white;">Actualizar datos</h3>
+                    <h3 style="color: white;" id="h3Data">Datos del usuario</h3>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-5">
+                    <div class="bg-box p-5 borde text-white" id="dataUser">
+                        <!-- Datos del usuario -->
+                    </div>
                     <form id="update-form">
-                        <div class="bg-box p-5 borde text-white" style="width: 100%;">
+                        <div class="bg-box p-5 borde text-white" id="editData">
+                            <button id="goToData" style="position: fixed; left: 18%; top: 20.5%" class="menuBotones"><i
+                                class="fa-solid fa-arrow-left"></i></button>
                             <!-- NAME & SURNAME -->
                             <div class="columna">
-                                <input style="margin-right: 3px; width: 45%;" class="form-input-column" type="text"
+                                <input style="margin-right: 3px; width: 47%;" class="form-input-column" type="text"
                                     placeholder="Nombre" id="dataName" name="dataName">
                                 <input class="form-input-column" type="text" placeholder="Apellido" id="dataSurname"
-                                    name="dataSurname" style="width: 45%;">
+                                    name="dataSurname" style="width: 47%;">
                             </div>
                             <br>
                             <!-- TELÉFONO -->
@@ -194,16 +198,10 @@
                                 </div>
                                 <div class="form_group">
                                     <input class="form-input" type="text" placeholder="Número de teléfono"
-                                        id="dataTelefono" name="dataTelefono" style="width: 100%;">
+                                        id="dataTelefono" name="dataTelefono" style="width: 105%;">
                                 </div>
                                 <i style="right: 30px" class="validacion-estado fas fa-times-circle"></i>
                                 <br>
-                            </div>
-                            <!-- EMAIL -->
-                            <div class="input-group mt-4" id="update-email">
-                                <div class="form_group">
-                                    <p id="dataEmail"></p>
-                                </div>
                             </div>
 
 

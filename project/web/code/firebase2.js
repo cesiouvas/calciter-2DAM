@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js"
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"
-import { getFirestore, getDocs, collection, addDoc, updateDoc, doc, FieldValue } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { getFirestore, getDocs, collection, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -98,5 +98,22 @@ export async function insertGasto(name, type, price, paidBy, payers, iterId, gas
     paidBy: paidBy,
     payers: payers,
     gastoId: gastoId
+  })
+}
+
+//Actualizar datos del usuario
+export async function updateUser(id, name, surname, telefono) {
+  const docRef = doc(db, "usuarios", id)
+  console.log(docRef)
+  await updateDoc(docRef, {
+    name: name,
+    surname: surname,
+    telefono: telefono
+  })
+  .then((docRef) => {
+    console.log("datos actualizados")
+  })
+  .catch((error) => {
+    console.log(error)
   })
 }

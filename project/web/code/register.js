@@ -182,15 +182,4 @@ const registrar = () => {
     const passwd = registerForm['passwd']
 
     guardar(name.value, surname.value, telefono.value, email.value, passwd.value, "usuario")
-    //Crea una transacción para guardar los datos
-    /* 
-    let transaction = { name: name.value, surname: surname.value, username: username.value, email: email.value, passwd: passwd.value }
-    let transactionJson = JSON.stringify(transaction)
-
-    //Manda los datos al backend y se guardan ahí
-    fetch('http://localhost:3000/transaction', {
-        method: 'Post',
-        body: transactionJson
-    })
-    */
 }

@@ -56,7 +56,7 @@ onAuthStateChanged(auth, async (user) => {
         //Seleción de fechas
         dates.innerHTML = selectDates()
         reponerFecha()
-            
+
         userInfo.innerHTML = auth.currentUser.email
 
         //divisionPago()
@@ -244,6 +244,8 @@ inviteButton.addEventListener('click', async (e) => {
                 newParticipant(a, doc.id)
                 access = true
             }
+        } else {
+            idNoValid = true
         }
     })
 

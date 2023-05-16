@@ -5,7 +5,6 @@ import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
 let newIterButtons = document.getElementById('newIterButtons')
-let prueba = 1
 let dataIter
 
 //Función que enseña los viajes del usuario actual
@@ -17,12 +16,12 @@ export async function showIter() {
 
     querySnapshot.forEach((doc) => {
         cad += `<div id="iter${cont}" class="rounded border border-dark mt-3 bg-iter" style="height: 70px">
-        <table style="height: 70px">
-            <td>${doc.data().description}</td>
-            <td style="width: 30%">${doc.data().startDate} - ${doc.data().endDate}</td>
-            <td>${doc.data().country} - ${doc.data().city}</td>
-        </table>
-                    
+                    <table style="height: 70px">
+                        <td style="width: 25%">${doc.data().description}</td>
+                        <td style="width: 35%; padding-left: 8px" class="text-decoration-underline">${doc.data().startDate} - ${doc.data().endDate}</td>
+                        <td style="width: 30%; padding-left: 10px">${doc.data().country}, ${doc.data().city}</td>
+                        <td style="width: 10px;"><button id="deleteButton" class="deleteButton"><img src="../img/delete.png" style="width: 17px; height: 20px"></button></td>
+                     </table>     
                 </div>`
         cont++
     })
@@ -61,22 +60,20 @@ export function getDatos() {
     })
 }
 
+//Calcula los gastos 
 async function calcGastos(dataIter) {
     let deudas = document.getElementById('deudasGroup')
     let cad = ``
     let gasto = 0
 
-    let q = query(gastosRef, where("payers", "array-contains", auth.currentUser.email), where("iterId", "==", dataIter.iterId))
-    let querySnapshot = await getDocs(q)
-
-
-
+    //Recorre los participantes para hacer la suma de cada uno
     for (let i = 0; i < dataIter.participants.length; i++) {
-        console.log(dataIter.participants[i])
 
+        //Enseñar el nombre y apellido del usuario
         let qUsers = query(usersRef, where("email", "==", dataIter.participants[i]))
         let querySnapUsers = await getDocs(qUsers)
 
+        //Saber quien ha pagado y a quien hay que devolverle el dinero
         let q = query(gastosRef, where("paidBy", "==", dataIter.participants[i]), where("iterId", "==", dataIter.iterId))
         let querySnapt = await getDocs(q)
 
@@ -85,19 +82,16 @@ async function calcGastos(dataIter) {
             querySnapt.forEach((docPaid) => {
                 if (docPaid.data().payers.includes(auth.currentUser.email)) {
                     if (docPaid.data().paidBy == auth.currentUser.email) {
-                        console.log(docPaid.data().paidBy)
                     } else {
                        gasto += docPaid.data().price / docPaid.data().payers.length 
                     }
                 }
-                console.log(gasto)
             });
             cad += ` ${gasto}</p>`
             gasto = 0
             deudas.innerHTML = cad
         })
     }
-    console.log(cad)
 }
 
 //Enseña los datos del viaje
@@ -158,7 +152,6 @@ export async function getIter(iter) {
     })
 }
 
-
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
 allIter.addEventListener('click', () => {
     let botoneraPadre = document.getElementById('botoneraPadre')
@@ -168,19 +161,6 @@ allIter.addEventListener('click', () => {
     newIterButtons.style.display = 'block'
     showIter()
 })
-
-//Enseña los gastos que se van haciendo en el viaje
-/* 
-gastos.addEventListener('click', () => {
-    gastos.classList.add('bordeBotones')
-    datos.classList.remove('bordeBotones')
-    let cad = `<div class="container" id="showGastos">
-                </div>
-                <button id="createGasto" data-bs-toggle="modal" data-bs-target="#newGastoModal" type="button" class="btn btn-secondary newGasto"><i class="fa-solid fa-plus"></i></button>`
-    info.innerHTML = cad
-    showGastos(data)
-})
-*/
 
 //Rellena el select para seleccionar quien paga el gasto
 async function pagadorGasto(datos) {
