@@ -83,11 +83,11 @@ async function calcGastos(dataIter) {
                 if (docPaid.data().payers.includes(auth.currentUser.email)) {
                     if (docPaid.data().paidBy == auth.currentUser.email) {
                     } else {
-                       gasto += docPaid.data().price / docPaid.data().payers.length 
+                        gasto += docPaid.data().price / docPaid.data().payers.length
                     }
                 }
             });
-            cad += ` ${gasto}</p>`
+            cad += ` ${gasto}€</p>`
             gasto = 0
             deudas.innerHTML = cad
         })
@@ -109,9 +109,7 @@ export async function getIter(iter) {
     botoneraPadre.style.display = 'block'
     newIterButtons.style.display = 'none'
 
-    cad += `<br>
-            <div id="datosViaje">
-            <br>
+    cad += `<div id="datosViaje" style="margin-top: 5%">
                 <p>estoy dentro del viaje ${iter.iterId}</p>
                 <p>${iter.participants}<p>
             </div>`
@@ -120,26 +118,39 @@ export async function getIter(iter) {
     let qGastos = query(gastosRef)
     let querySnapshot = await getDocs(qGastos)
 
-    cad += `<div id="gastosViaje">`
+    cad += `<div id="gastosViaje" style="margin-top: 5%">`
 
     //Muestra los gastos por pantalla
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(async (doc) => {
+        //Enseñar el nombre y apellido del usuario
         if (doc.data().iterId == iter.iterId) {
+            console.log(doc.data().paidBy)
+            let qUsers = query(usersRef, where("email", "==", doc.data().paidBy))
+            let querySnapUsers = await getDocs(qUsers)
             cad += `<div id="${doc.data().gastoId}" class="rounded border border-dark mt-3 bg-iter" style="padding: 10px">
-                        <img src="../img/${doc.data().type}.png" class="gastoImg">
-                        <p>${doc.data().name}</p>
-                        <p>${doc.data().price}€</p>
-                        <p>${doc.data().paidBy}</p>
+                        <table>
+                        <td><img src="../img/${doc.data().type}.png" class="gastoImg"></td>
+                        <td>${doc.data().name}</td>
+                        <td>${doc.data().price}€</td>`
+            querySnapUsers.forEach((docUser) => {
+                cad += `<td>${docUser.data().name} ${docUser.data().surname}</td>
+                                    <td>${docUser.data().telefono}</td>`
+            })
+            cad += `</table>
                     </div>`
         }
     })
 
-    cad += `</div>`
+    //Lo anterior es un proceso await, por lo que tarda un poco en cargar  
+    //usamos un timeout de unas milesimas para que se enseñe todo correctamentr
+    setTimeout(() => {
+        cad += `</div>`
+        console.log(cad)
+        info.innerHTML = cad
+        let datosViajeDiv = document.getElementById('datosViaje')
+        datosViajeDiv.style.display = 'none'
+    }, 200)
 
-    info.innerHTML = cad
-
-    let datosViajeDiv = document.getElementById('datosViaje')
-    datosViajeDiv.style.display = 'none'
     pagadorGasto(iter)
 
     dataIter = iter
@@ -180,7 +191,5 @@ async function pagadorGasto(datos) {
             }
         }
     })
-
     selectPagador.innerHTML = cad
 }
-

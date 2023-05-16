@@ -69,7 +69,6 @@ export async function divisionPago(datos) {
             //Guarda pagadores
             allPagadores.push(part[i])
         }
-
     }
 
     //Todos pagan por igual
