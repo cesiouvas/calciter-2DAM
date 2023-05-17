@@ -17,7 +17,7 @@ export async function showIter() {
     querySnapshot.forEach((doc) => {
         cad += `<div id="iter${cont}" class="rounded border border-dark mt-3 bg-iter" style="height: 70px">
                     <table style="height: 70px">
-                        <td style="width: 25%">${doc.data().description}</td>
+                        <td style="width: 25%">${doc.data().name}</td>
                         <td style="width: 35%; padding-left: 8px" class="text-decoration-underline">${doc.data().startDate} - ${doc.data().endDate}</td>
                         <td style="width: 30%; padding-left: 10px">${doc.data().country}, ${doc.data().city}</td>
                         <td style="width: 10px;"><button id="deleteButton" class="deleteButton"><img src="../img/delete.png" style="width: 17px; height: 20px"></button></td>
@@ -26,8 +26,14 @@ export async function showIter() {
         cont++
     })
 
-    //Mostrar los viajes por pantalla
-    info.innerHTML = cad
+    //Comprueba si el usuario tiene viajes
+    if (cont <= 1) {
+        cad = `<p>Todavía no tienes viajes creados, prueba a crear alguno con los botones inferiores</p>`
+        info.innerHTML = cad
+    } else {
+        //Mostrar los viajes por pantalla
+        info.innerHTML = cad
+    }
 
     //Reseteo el contador para crear los eventos click
     cont = 1
@@ -78,7 +84,7 @@ async function calcGastos(dataIter) {
         let querySnapt = await getDocs(q)
 
         querySnapUsers.forEach((docUser) => {
-            cad += `<p>${docUser.data().name} ${docUser.data().surname}:`
+            cad += `<p><b>${docUser.data().name} ${docUser.data().surname}:</b>`
             querySnapt.forEach((docPaid) => {
                 if (docPaid.data().payers.includes(auth.currentUser.email)) {
                     if (docPaid.data().paidBy == auth.currentUser.email) {
@@ -87,6 +93,8 @@ async function calcGastos(dataIter) {
                     }
                 }
             });
+            //Limito los decimales a 2 dígitos
+            gasto = gasto.toFixed(2)
             cad += ` ${gasto}€</p>`
             gasto = 0
             deudas.innerHTML = cad
@@ -119,12 +127,11 @@ export async function getIter(iter) {
     let querySnapshot = await getDocs(qGastos)
 
     cad += `<div id="gastosViaje" style="margin-top: 5%">`
-
+    let cont = 0
     //Muestra los gastos por pantalla
     querySnapshot.forEach(async (doc) => {
         //Enseñar el nombre y apellido del usuario
         if (doc.data().iterId == iter.iterId) {
-            console.log(doc.data().paidBy)
             let qUsers = query(usersRef, where("email", "==", doc.data().paidBy))
             let querySnapUsers = await getDocs(qUsers)
             cad += `<div id="${doc.data().gastoId}" class="rounded border border-dark mt-3 bg-iter" style="padding: 10px">
@@ -138,18 +145,28 @@ export async function getIter(iter) {
             })
             cad += `</table>
                     </div>`
+            cont++
         }
     })
 
-    //Lo anterior es un proceso await, por lo que tarda un poco en cargar  
-    //usamos un timeout de unas milesimas para que se enseñe todo correctamentr
-    setTimeout(() => {
-        cad += `</div>`
-        console.log(cad)
+    //Se comprueba que hayan gastos creados o no
+    if (cont = 0) {
+        cad += `<p>Todavía no tienes gastos, prueba a crear alguno</p>
+                </div>`
         info.innerHTML = cad
         let datosViajeDiv = document.getElementById('datosViaje')
         datosViajeDiv.style.display = 'none'
-    }, 200)
+    } else {
+        //Lo anterior es un proceso await, por lo que tarda un poco en cargar  
+        //usamos un timeout de unas milesimas para que se enseñe todo correctamentr
+        setTimeout(() => {
+            cad += `</div>`
+            info.innerHTML = cad
+            let datosViajeDiv = document.getElementById('datosViaje')
+            datosViajeDiv.style.display = 'none'
+        }, 300)
+    }
+
 
     pagadorGasto(iter)
 

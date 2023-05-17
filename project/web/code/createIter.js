@@ -21,6 +21,9 @@ let inviteButton = document.getElementById('inviteButton')
 let newIter = document.getElementById('newIter')
 let userInfo = document.getElementById('userInfo')
 
+let newIterForm = document.getElementById('new-iter-form')
+let accessIterForm = document.getElementById('access-iter-form')
+
 //Validar campos
 const camposValidados = {
     itername: false,
@@ -208,7 +211,6 @@ async function saveIter() {
     do {
         //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes
         iterId = Math.floor(Math.random() * 10000000)
-        console.log(iterId)
         querySnapshot.forEach((doc) => {
             if (doc.data().iterId != iterId) {
                 cont = false
@@ -219,6 +221,10 @@ async function saveIter() {
     } while (cont)
 
     insertIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
+
+    //Cerrar el modal
+    const modal = bootstrap.Modal.getInstance(newIterForm.closest('.modal'));
+    modal.hide();
 }
 
 //Acceder a un viaje mediante código
@@ -242,6 +248,14 @@ inviteButton.addEventListener('click', async (e) => {
                 a = doc.data().participants
                 a.push(email)
                 newParticipant(a, doc.id)
+
+                //Cerrar el modal
+                const modal = bootstrap.Modal.getInstance(accessIterForm.closest('.modal'));
+                modal.hide()
+
+                //Actualiza la lista de viajes del usuario
+                showIter()
+                
                 access = true
             }
         } else {
@@ -263,9 +277,4 @@ inviteButton.addEventListener('click', async (e) => {
             document.getElementById('invalidId').classList.remove('formulario-error-activo')
         }, 5000)
     }
-
-    //Temporizador para cargar los nuevos viajes después de un segundo
-    setTimeout(() => {
-        showIter()
-    }, 1000)
 })

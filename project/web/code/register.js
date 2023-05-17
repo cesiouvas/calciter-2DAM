@@ -138,6 +138,10 @@ btnRegister.addEventListener('click', async (e) => {
             console.log(error)
         }
 
+        //Cerrar el modal
+        const modal = bootstrap.Modal.getInstance(registerForm.closest('.modal'));
+        modal.hide();
+
         //Reinicia los valores del formulario
         name1.value = ""
         surname.value = ""

@@ -34,7 +34,6 @@ export const gastosRef = collection(db, "gastos")
 
 //Insertar usuarios en la db
 export async function guardar(name, surname, telefono, email, passwd, rol) {
-
   await addDoc(collection(db, "usuarios"), {
     name: name,
     surname: surname,

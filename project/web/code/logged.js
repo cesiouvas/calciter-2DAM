@@ -21,6 +21,9 @@ let dataName = document.getElementById('dataName')
 let dataSurname = document.getElementById('dataSurname')
 let dataTelefono = document.getElementById('dataTelefono')
 
+let newIterButtons = document.getElementById('newIterButtons')
+let logoDiv = document.getElementById('logoDiv')
+
 const logout = document.querySelector('#logout')
 let info = document.getElementById('iter-info')
 let cad = ``
@@ -46,8 +49,12 @@ onAuthStateChanged(auth, async (user) => {
         //Llama al método que comprueba si existe
         loginCheck(user)
         showUserData()
+        newIterButtons.style.display = 'block'
     } else { //No lo está
         loginCheck(user)
+        newIterButtons.style.display = 'none'
+        const url = getCurrentURL()
+        console.log(url)
     }
 })
 
@@ -130,6 +137,7 @@ goToData.addEventListener('click', async (e) => {
 
 //Cerrar sesión con el usuario actual
 logout.addEventListener('click', async () => {
+    newIterButtons.style.display = 'none'
     await signOut(auth)
     info.innerHTML = cad
     console.log('El usuario ha cerrado sesión')

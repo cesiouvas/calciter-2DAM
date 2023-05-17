@@ -19,6 +19,8 @@ let participantsPay = document.getElementById('participantsPay')
 let acceptPayers = document.getElementById('acceptPayers')
 const inputs = document.querySelectorAll("#newGastoForm input")
 
+let newGastoForm = document.getElementById('newGastoForm')
+
 let noPayers = []
 let opc = 0
 let datosViaje
@@ -74,7 +76,6 @@ export async function divisionPago(datos) {
     //Todos pagan por igual
     checkAll.addEventListener('change', (e) => {
         e.preventDefault()
-        console.log(allPagadores)
         noPayers = []
         if (checkAll.checked) {
             cad = `<p>El gasto se dividirá entre todos los participantes del viaje equitativamente</p>`
@@ -291,10 +292,10 @@ function insertValues(e) {
                     }
                 }
                 resetCheck = 0
-                
+
                 //Gasto creado
                 getIter(dataNewGasto)
-            }, 2000)            
+            }, 2000)
 
             //Mensaje que confirma que se ha creado el usuario
             document.getElementById('gastoCreated').classList.add('form-enviado-activo')
@@ -345,5 +346,10 @@ async function createGasto() {
 
     //Insertar gasto en la base de datos
     insertGasto(name, tipo, price, paidBy, payersToDB, datosViaje.iterId, gastoId)
+
+    //Cerrar el modal
+    const modal = bootstrap.Modal.getInstance(newGastoForm.closest('.modal'));
+    modal.hide();
+    
     payersToDB = []
 }

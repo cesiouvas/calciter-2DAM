@@ -332,3 +332,9 @@ td {
     border: none;
     color: rgb(255, 0, 0);
 }
+
+hr {
+    height: 4px;
+    background-color: rgb(13, 4, 77);
+    border-color: rgb(21, 8, 94);
+  }

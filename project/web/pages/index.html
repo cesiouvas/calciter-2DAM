@@ -14,6 +14,7 @@
     <!-- Menú superior -->
     <nav class="navbar navbar-expand bg-dark navbar-dark" style="position: fixed; width: 100%;">
         <div class="container">
+            <img src="../img/logo.png" alt="Logo de la aplicación" style="width: 40px;">
             <a class="navbar-brand" href="index.html">Calciter</a>
             <div class="navbar-nav">
                 <a class="nav-link logged-out" href="#" data-bs-toggle="modal" data-bs-target="#signinModal">Iniciar
@@ -38,6 +39,11 @@
             </div>
             <br>
         </div>
+    </div>
+
+    <div id="logoDiv" style="margin-left: 8%; margin-top: 15%;">
+        <!-- LOGO -->
+        <img src="../img/logo.png" alt="Logo de la aplicación">
     </div>
 
     <div class="row" id="iter-info" style="width: 80%; margin-left: 10%; margin-top: 2%; margin-bottom: 5%;">
@@ -182,7 +188,7 @@
                     <form id="update-form">
                         <div class="bg-box p-5 borde text-white" id="editData">
                             <button id="goToData" style="position: fixed; left: 18%; top: 20.5%" class="menuBotones"><i
-                                class="fa-solid fa-arrow-left"></i></button>
+                                    class="fa-solid fa-arrow-left"></i></button>
                             <!-- NAME & SURNAME -->
                             <div class="columna">
                                 <input style="margin-right: 3px; width: 47%;" class="form-input-column" type="text"
@@ -203,23 +209,6 @@
                                 <i style="right: 30px" class="validacion-estado fas fa-times-circle"></i>
                                 <br>
                             </div>
-
-
-                            <!-- ERROR: Campos vacíos
-                            <div class="formulario-error" id="formulario-error">
-                                <p><i class="fas fa-exclamation-triangle"></i> Error: rellena todos los campos por favor
-                                </p>
-                            </div>
-
-                            <div class="formulario-error" id="usuario-existe">
-                                <p><i class="fas fa-exclamation-triangle"></i> Error: El usuario ya existe
-                                </p>
-                            </div>
-
-                            <div class="form-enviado" id="form-enviado">
-                                <p><i class="fa-solid fa-check"></i> Usuario creado correctamente</p>
-                            </div>
-                            -->
                             <div>
                                 <button id="updateData" type="button" class="btn bg-dark mt-4"
                                     style="width: 97%; color: white;">Actualizar datos</button>
@@ -270,11 +259,7 @@
                                 sesión</button>
                             <div class="mt-3">
                                 <button type="button" class="btn btn-info" id="googleLogin"
-                                    style="width: 32.5%;">Google</button>
-                                <button type="button" class="btn btn-primary" id="facebookLogin"
-                                    style="width: 33%;">Facebook</button>
-                                <button type="button" class="btn btn-dark" id="githubLogin"
-                                    style="width: 32%;">Github</button>
+                                    style="width: 100%;">Google</button>
                             </div>
 
                             <!-- Mensaje error -->
@@ -350,15 +335,15 @@
                                 viaje</button>
 
                             <!-- ERROR: Campos vacíos -->
-                            <div class="formulario-error" id="iter-vacio">
-                                <p><i class="fas fa-exclamation-triangle mt-2" style="width: 100%;"></i> Error: Rellena
+                            <div class="formulario-error mt-2" id="iter-vacio">
+                                <p><i class="fas fa-exclamation-triangle" style="width: 100%;"></i> Error: Rellena
                                     todos los campos
                                 </p>
                             </div>
 
                             <!-- Viaje creado correctamente -->
-                            <div class="form-enviado" id="iter-enviado">
-                                <p><i class="fa-solid fa-check mt-2" style="width: 100%;"></i> Viaje creado
+                            <div class="form-enviado mt-2" id="iter-enviado">
+                                <p><i class="fa-solid fa-check" style="width: 100%;"></i> Viaje creado
                                     correctamente</p>
                             </div>
                         </div>
@@ -523,6 +508,7 @@
                                 <label class="btn btn-outline-light" for="noTodos">No pagan todos</label>
                             </div>
                             <!-- Informacion del pago -->
+                            <hr>
                             <div id="infoPago" class="container p-3">
                                 <!-- Quienes van a pagar -->
                             </div>
@@ -540,7 +526,7 @@
     <!-- Deudas -->
     <div class="modal fade" id="deudasModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered" style="width: 40%;">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Tus deudas</h3>
@@ -550,16 +536,13 @@
                 <div class="modal-body">
                     <div class="bg-box p-5 borde text-white">
                         <div class="btn-group" role="group">
-                            <p>Debes dinero a: </p>
+                            <h2>Debes dinero a: </h2>
                         </div>
+                        <hr>
                         <div id="deudasGroup" class="container p-3">
                             <!-- A quien le debes x dinero -->
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="acceptPayers" class="btn btn-primary" data-bs-target="#newGastoModal"
-                        data-bs-toggle="modal">Aceptar</button>
                 </div>
             </div>
         </div>

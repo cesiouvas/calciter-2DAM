@@ -5,9 +5,7 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 600,
     height: 800,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+
   })
 
   // and load the index.html of the app.
