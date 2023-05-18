@@ -1,7 +1,6 @@
 import { getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { auth, iterRef, usersRef, gastosRef } from './firebase2.js'
 import { divisionPago } from './gasto.js'
-//import { showGastos } from './showGasto.js'
 
 let info = document.getElementById('iter-info')
 let newIterButtons = document.getElementById('newIterButtons')
@@ -67,7 +66,7 @@ export function getDatos() {
 }
 
 //Calcula los gastos 
-async function calcGastos(dataIter) {
+export async function calcGastos(dataIter) {
     let deudas = document.getElementById('deudasGroup')
     let cad = ``
     let gasto = 0
@@ -111,6 +110,7 @@ export async function getIter(iter) {
     let cad = ``
 
     divisionPago(iter)
+    calcGastos(iter)
 
     //Enseñar el menu de gastos y datos
     let botoneraPadre = document.getElementById('botoneraPadre')
@@ -167,12 +167,10 @@ export async function getIter(iter) {
         }, 300)
     }
 
-
+    //Calcula quienes deben pagar el gasto
     pagadorGasto(iter)
 
     dataIter = iter
-
-    calcGastos(dataIter)
 
     datos.addEventListener('click', () => {
         divisionPago(dataIter)

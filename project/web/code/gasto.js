@@ -1,6 +1,6 @@
 import { getDocs, query } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 import { usersRef, gastosRef, insertGasto } from './firebase2.js'
-import { getIter, getDatos } from './inIter.js'
+import { getIter, calcGastos } from './inIter.js'
 
 //Datos gasto
 let nameGasto = document.getElementById('nameGasto')
@@ -80,14 +80,13 @@ export async function divisionPago(datos) {
         if (checkAll.checked) {
             cad = `<p>El gasto se dividirá entre todos los participantes del viaje equitativamente</p>`
             infoPago.innerHTML = cad
+            
             //Recoge todos los participantes del viaje
-
             //Guardo los participantes en un auxiliar por si acaso da error
             for (let i = 0; i < allPagadores.length; i++) {
                 aux.push(allPagadores[i])
             }
             opc = 1
-            console.log(allPagadores)
         }
     })
 
@@ -97,7 +96,6 @@ export async function divisionPago(datos) {
         let q = query(usersRef)
         let querySnapshot = await getDocs(q)
         let cont = 1
-        console.log(allPagadores)
 
         //Opción seleccionada
         if (checkSome.checked) {
@@ -295,6 +293,7 @@ function insertValues(e) {
 
                 //Gasto creado
                 getIter(dataNewGasto)
+                //calcGastos(dataNewGasto)
             }, 2000)
 
             //Mensaje que confirma que se ha creado el usuario

@@ -50,9 +50,11 @@ onAuthStateChanged(auth, async (user) => {
         loginCheck(user)
         showUserData()
         newIterButtons.style.display = 'block'
+        logoDiv.style.display = 'none'
     } else { //No lo está
         loginCheck(user)
         newIterButtons.style.display = 'none'
+        logoDiv.style.display = 'block'
         const url = getCurrentURL()
         console.log(url)
     }
@@ -151,17 +153,14 @@ function validateForm(e) {
         case "dataTelefono":
             //Llamada a la función que valida el username
             validarCampo(validation.telefono, e.target, 'telefono')
-            console.log(e.target.name)
             break
         case "dataName":
             //Comprueba que el campo no esté vacío
             validarNom(e.target, 'name')
-            console.log(e.target.name)
             break
         case "dataSurname":
             //Comprueba que el campo no esté vacío
             validarNom(e.target, 'surname')
-            console.log(e.target.name)
             break
     }
 }
@@ -175,7 +174,6 @@ const validarCampo = (expr, input, campo) => {
         document.querySelector(`#update-${campo} i`).classList.add('fa-check-circle')
         document.querySelector(`#update-${campo} i`).classList.remove('fa-times-circle')
         camposValidados[campo] = true
-        console.log(camposValidados)
     } else {
         //Campo incorrecto
         document.getElementById(`update-${campo}`).classList.add('incorrect')
@@ -183,7 +181,6 @@ const validarCampo = (expr, input, campo) => {
         document.querySelector(`#update-${campo} i`).classList.add('fa-times-circle')
         document.querySelector(`#update-${campo} i`).classList.remove('fa-check-circle')
         camposValidados[campo] = false
-        console.log(camposValidados)
     }
 }
 
