@@ -171,6 +171,15 @@ function selectDates(iter) {
     return cad
 }
 
+function reponerFecha() {
+    let startdate = document.getElementById('stadataStartdatertdate')
+    startdate.addEventListener('blur', () => {
+        let endFecha = document.getElementById('dataEnddate')
+
+        endFecha.min = startdate.value
+    })
+}
+
 //Enseña los datos del viaje
 export async function getIter(iter) {
     let gastosButtons = document.getElementById('gastosButtons')
@@ -182,12 +191,7 @@ export async function getIter(iter) {
     divisionPago(iter)
     calcGastos(iter)
 
-    //Enseñar el menu de gastos y datos
-    let botoneraPadre = document.getElementById('botoneraPadre')
-    botoneraPadre.style.display = 'block'
-    newIterButtons.style.display = 'none'
-
-    cad += `<div id="datosViaje" style="margin-top: 10%;">
+    cad += `<div id="datosViaje" style="margin-top: 8%;">
                 <table>
                     <tr>
                         <td>
@@ -202,6 +206,11 @@ export async function getIter(iter) {
     cad += selectDates(iter)
 
     cad += `</tr>
+            <tr>
+                <td>
+                    <input
+                </td>
+            </tr>
                 </table>
                             <p>estoy dentro del viaje ${iter.iterId}</p>
                 <p>${iter.participants}<p>
@@ -230,13 +239,19 @@ export async function getIter(iter) {
             cad += `</table>
                     </div>`
             cont++
-            console.log(cont)
         }
     })
+
+    console.log(cad)
 
     //Lo anterior es un proceso await, por lo que tarda un poco en cargar  
     //usamos un timeout de unas milesimas para que se enseñe todo correctamentr
     setTimeout(() => {
+        //Enseñar el menu de gastos y datos
+        let botoneraPadre = document.getElementById('botoneraPadre')
+        botoneraPadre.style.display = 'block'
+        newIterButtons.style.display = 'none'
+
         //Se comprueba que hayan gastos creados o no
         if (cont == 0) {
             cad += `<div class="noIter">
@@ -252,8 +267,8 @@ export async function getIter(iter) {
             let datosViajeDiv = document.getElementById('datosViaje')
             datosViajeDiv.style.display = 'none'
         }
-    }, 300)
-    
+    }, 150)
+
     //Calcula quienes deben pagar el gasto
     pagadorGasto(iter)
 
