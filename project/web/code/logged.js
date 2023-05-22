@@ -188,10 +188,8 @@ const validarCampo = (expr, input, campo) => {
 const validarNom = (input, campo) => {
     if (input.value != "") {
         camposValidados[campo] = true
-        console.log(camposValidados)
     } else {
         camposValidados[campo] = false
-        console.log(camposValidados)
     }
 }
 
