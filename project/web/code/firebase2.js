@@ -116,3 +116,23 @@ export async function updateUser(id, name, surname, telefono) {
     console.log(error)
   })
 }
+
+//Actualizar datos del viaje
+export async function updateIter(name, desc, country, city, startDate, endDate, id) {
+  const docRef = doc(db, "viajes", id)
+  console.log(docRef)
+  await updateDoc(docRef, {
+    name: name,
+    description: desc,
+    country: country,
+    city: city,
+    startDate: startDate,
+    endDate: endDate
+  })
+  .then((docRef) => {
+    console.log("datos actualizados")
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}

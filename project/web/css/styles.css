@@ -406,8 +406,7 @@ hr {
     border-radius: 7px;
     height: 40px;
     line-height: 45px;
-    padding: 0 45px 0 10px;
-    transition: .3s ease all;
+    padding: 0 10px 0 10px;
 }
 
 td {

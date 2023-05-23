@@ -28,6 +28,7 @@ let accessIterForm = document.getElementById('access-iter-form')
 const camposValidados = {
     itername: false,
     iterdesc: false,
+    ciudad: false
 }
 
 //Validar campos del formulario
@@ -145,10 +146,11 @@ function selectDates() {
 
 function reponerFecha() {
     let startdate = document.getElementById('startdate')
-    startdate.addEventListener('blur', () => {
-        let endFecha = document.getElementById('enddate')
+    let endFecha = document.getElementById('enddate')
 
+    startdate.addEventListener('blur', () => {
         endFecha.min = startdate.value
+        endFecha.value = startdate.value
     })
 }
 
@@ -206,21 +208,18 @@ async function saveIter() {
     //Query para sacar las IDs
     let qIter = query(iterRef)
     let querySnapshot = await getDocs(qIter)
-    let cont = true
 
-    do {
-        //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes
-        iterId = Math.floor(Math.random() * 10000000)
-        querySnapshot.forEach((doc) => {
-            if (doc.data().iterId != iterId) {
-                cont = false
-            } else {
-                cont = true
-            }
-        })
-    } while (cont)
+    //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes
+    iterId = Math.floor(Math.random() * 10000000)
+    querySnapshot.forEach((doc) => {
+        if (doc.data().iterId != iterId) {
+            cont = false
+        } else {
+            insertIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
 
-    insertIter(auth.currentUser.email, itername, iterdesc, pais, ciudad, startdate, enddate, iterId)
+        }
+    })
+
 
     //Cerrar el modal
     const modal = bootstrap.Modal.getInstance(newIterForm.closest('.modal'));
@@ -255,7 +254,7 @@ inviteButton.addEventListener('click', async (e) => {
 
                 //Actualiza la lista de viajes del usuario
                 showIter()
-                
+
                 access = true
             }
         } else {

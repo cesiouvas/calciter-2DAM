@@ -1,10 +1,17 @@
 import { getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef, usersRef, gastosRef } from './firebase2.js'
+import { auth, iterRef, usersRef, gastosRef, paisRef, updateIter } from './firebase2.js'
 import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
 let newIterButtons = document.getElementById('newIterButtons')
 let dataIter
+
+//Validar campos
+const camposValidados = {
+    iterDataName: true,
+    iterDataDesc: true,
+    iterDataCity: true
+}
 
 //Función que enseña los viajes del usuario actual
 export async function showIter() {
@@ -101,10 +108,10 @@ export async function calcGastos(dataIter) {
     }
 }
 
+//Crea las fechas con el formato correcto
 function selectDates(iter) {
     let cad = ``
-    let startDate
-    let endDate
+    let date
     const fecha = new Date()
     const day = fecha.getDate()
     const month = fecha.getMonth() + 1
@@ -132,51 +139,54 @@ function selectDates(iter) {
                 case 8:
                 case 9:
                     //startDate es la fecha actual
-                    startDate = year + "-0" + month + "-" + 0 + day
-                    //endDate es la fecha actual + 1
-                    endDate = year + "-0" + month + "-" + 0 + day
+                    date = year + "-0" + month + "-" + 0 + day
                     cad = `<td>
-                                <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${startDate}" required>
+                                <label for="dataStartdate">Fecha inicio</label>
+                                <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${date}" required disabled>
                             </td>
                             <td>
-                                <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${endDate}" required>
+                                <label for="dataEnddate">Fecha final</label>
+                                <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${date}" required disabled>
                             </td>`
                     break
                 default:
                     //startDate es la fecha actual
-                    startDate = year + "-0" + month + "-" + day
-                    //endDate es la fecha actual + 1
-                    endDate = year + "-0" + month + "-" + day
+                    date = year + "-0" + month + "-" + day
                     cad = `<td>
-                                <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${startDate}" required>
+                                <label for="dataStartdate">Fecha inicio</label>
+                                <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${date}" required disabled>
                             </td>
                             <td>
-                                <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${endDate}" required>
+                                <label for="dataEnddate">Fecha final</label>
+                                <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${date}" required disabled>
                             </td>`
                     break
             }
             break
 
         default:
-            startDate = year + "-" + month + "-" + day
-            endDate = year + "-" + month + "-" + day
+            date = year + "-" + month + "-" + day
             cad = `<td>
-                        <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${startDate}" required>
+                        <label for="dataStartdate">Fecha inicio</label>
+                        <input class="iterDataInput" type="date" id="dataStartdate" name="startdate" value="${iter.startDate}" min="${date}" required disabled>
                     </td>
                     <td>
-                        <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${endDate}" required>
+                        <label for="dataEnddate">Fecha final</label>
+                        <input class="iterDataInput" type="date" id="dataEnddate" name="enddate" value="${iter.endDate}" min="${date}" required disabled>
                     </td>`
             break
     }
     return cad
 }
 
+//Actualiza la fecha de los inputs
 function reponerFecha() {
-    let startdate = document.getElementById('stadataStartdatertdate')
-    startdate.addEventListener('blur', () => {
-        let endFecha = document.getElementById('dataEnddate')
+    let startdate = document.getElementById('dataStartdate')
+    let endFecha = document.getElementById('dataEnddate')
 
+    startdate.addEventListener('blur', () => {
         endFecha.min = startdate.value
+        endFecha.value = startdate.value
     })
 }
 
@@ -186,6 +196,7 @@ export async function getIter(iter) {
     gastosButtons.style.display = 'block'
     gastos.classList.add('bordeBotones')
     datos.classList.remove('bordeBotones')
+    let part = iter.participants
     let cad = ``
 
     divisionPago(iter)
@@ -195,25 +206,84 @@ export async function getIter(iter) {
                 <table>
                     <tr>
                         <td>
-                            <input class="iterDataInput" type="text" plceholder="Nombre del viaje" id="iterDataName" value="${iter.name}">
+                            <label for="iterDataName">Nombre</label>
+                            <input class="iterDataInput" type="text" plceholder="Nombre del viaje" id="iterDataName" value="${iter.name}" disabled>
                         </td>
                         <td>
-                            <input class="iterDataInput" type="text" plceholder="Nombre del viaje" id="iterDataName" value="${iter.description}">
+                            <label for="iterDataDesc">Descripción</label>
+                            <input class="iterDataInput" type="text" plceholder="Descripción" id="iterDataDesc" value="${iter.description}" disabled>
                         </td>
                     </tr>
                     <tr>`
 
+    //Llama a la función de las fechas
     cad += selectDates(iter)
 
     cad += `</tr>
             <tr>
                 <td>
-                    <input
+                    <label for="iterDataPaises">País</label>
+                    <select class="iterDataInput" id="iterDataPaises" disabled>`
+
+    //Mostrar paises en el select
+    let qPaises = query(paisRef)
+    let queryPaises = await getDocs(qPaises)
+
+    queryPaises.forEach((doc) => {
+        if (iter.country == doc.data().name) {
+            cad += `<option value="${doc.data().name}" selected>${doc.data().name}</option>`
+        } else {
+            cad += `<option value="${doc.data().name}">${doc.data().name}</option>`
+        }
+    })
+
+    cad += `</select>
+                </td>
+                <td>
+                    <label for="iterDataCity">Ciudad/pueblo</label>
+                    <input class="iterDataInput" type="text" plceholder="Ciudad/pueblo" id="iterDataCity" value="${iter.city}" disabled>
                 </td>
             </tr>
-                </table>
-                            <p>estoy dentro del viaje ${iter.iterId}</p>
-                <p>${iter.participants}<p>
+            <tr>
+                <td colspan="2">
+                    <p class="mt-2">El <b>código de invitación</b> es: <b>${iter.iterId}</b></p>
+                    <p>Compártelo con los usuarios para que se puedan unir al viaje.</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p><b>Participantes: </b>`
+
+    //Contador de participantes
+    let contPart = 0
+
+    //Enseñar los participantes de los viajes
+    part.forEach((doc) => {
+        cad += `${doc}`
+        contPart++
+        if (contPart == part.length) {
+            //No pone "," después de cada participante
+        } else {
+            cad += `, `
+        }
+    })
+
+    cad += `</p>
+                </td>
+            </tr>
+            </table>
+            
+            <div id="menuButtons" class="position-relative" style="bottom: -30%">
+                <div class="position-absolute translate-middle" style="left: 20%; width: 80px">
+                    <button id="disableFalseButton" class="btn btn-info mt-2">Editar datos del viaje</button>
+                    <button id="confirmEdit" class="btn btn-info mt-2" style="display: none">Guardar cambios</button>
+                    <button id="deleteIter" class="btn btn-danger mt-2">Eliminar viaje</button>
+                </div>
+                <div class="position-absolute translate-middle" style="right: 10%; width: 50px">
+                    <button id="addParticipant" class="btn btn-info mt-2">Añadir nuevo participante</button>
+                    <button id="deleteParticipant" class="btn btn-danger mt-2">Eliminar participante</button>
+                </div>
+            </div>
             </div>`
 
     let qGastos = query(gastosRef)
@@ -242,8 +312,6 @@ export async function getIter(iter) {
         }
     })
 
-    console.log(cad)
-
     //Lo anterior es un proceso await, por lo que tarda un poco en cargar  
     //usamos un timeout de unas milesimas para que se enseñe todo correctamentr
     setTimeout(() => {
@@ -261,11 +329,15 @@ export async function getIter(iter) {
             info.innerHTML = cad
             let datosViajeDiv = document.getElementById('datosViaje')
             datosViajeDiv.style.display = 'none'
+            reponerFecha()
+            createButtons()
         } else {
             cad += `</div>`
             info.innerHTML = cad
             let datosViajeDiv = document.getElementById('datosViaje')
             datosViajeDiv.style.display = 'none'
+            reponerFecha()
+            createButtons(iter)
         }
     }, 150)
 
@@ -274,10 +346,84 @@ export async function getIter(iter) {
 
     dataIter = iter
 
+    //Muestra los datos
     datos.addEventListener('click', () => {
         divisionPago(dataIter)
         getDatos()
     })
+}
+
+//Crea los botones de editar datos del viaje
+function createButtons() {
+    let inputs = document.querySelectorAll('.iterDataInput')
+
+    disableFalseButton.addEventListener('click', () => {
+        let confirmEdit = document.getElementById('confirmEdit')
+
+        //Quita el disabled a todos los inputs para poder validarlos
+        inputs.forEach((input) => {
+            input.disabled = false
+            confirmEdit.style.display = 'block'
+        })
+    })
+
+    //Guarda los cambios hechos
+    confirmEdit.addEventListener('click', (e) => {
+        //Validar campos del formulario
+        function validateForm(e) {
+            if (e.target.value.length == 0) {
+                camposValidados[e.target.id] = false
+            } else {
+                camposValidados[e.target.id] = true
+            }
+        }
+
+        //Asignar un evento por cada input
+        inputs.forEach((input) => {
+            input.addEventListener('keyup', validateForm)
+            input.addEventListener('blur', validateForm)
+        })
+        saveNewData(e)
+    })
+}
+
+async function saveNewData(e) {
+    try {
+        if (camposValidados.iterDataName && camposValidados.iterDataDesc && camposValidados.iterDataCity) {
+            e.preventDefault()
+            let inputs = document.querySelectorAll('.iterDataInput')
+            let confirmEdit = document.getElementById('confirmEdit')
+
+            //Sacar los valores del formulario
+            const itername = document.getElementById('iterDataName').value
+            const iterdesc = document.getElementById('iterDataDesc').value
+            const ciudad = document.getElementById('iterDataCity').value
+            const pais = document.getElementById('iterDataPaises').value
+            const startdate = document.getElementById('dataStartdate').value
+            const enddate = document.getElementById('dataEnddate').value
+
+            let q = query(iterRef)
+            let querySnapshot = await getDocs(q)
+
+            //Compara el "id" del viaje para actualizar el que toca
+            querySnapshot.forEach((doc) => {
+                if (dataIter.iterId == doc.data().iterId) {
+                    updateIter(itername, iterdesc, pais, ciudad, startdate, enddate, doc.id)
+                }
+            })
+
+            //Bloquear inputs y esconder botón
+            inputs.forEach((doc) => {
+                doc.disabled = true
+            })
+
+            confirmEdit.style.display = 'none'
+        } else {
+            console.log('que')
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 //Nos devuelve a la pestaña donde se enseña la lista de viajes
