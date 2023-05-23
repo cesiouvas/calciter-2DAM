@@ -410,5 +410,10 @@ hr {
 }
 
 td {
-    padding: 10px
+    padding: 10px;
+    justify-content: center;
+}
+
+.inIterBtn {
+    width: 200px;
 }

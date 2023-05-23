@@ -60,7 +60,6 @@ inputs.forEach((input) => {
 export async function divisionPago(datos) {
     let cad = ``
     let part = datos.participants
-    console.log(datos.participants)
     datosViaje = datos
     let aux = []
     dataNewGasto = datos

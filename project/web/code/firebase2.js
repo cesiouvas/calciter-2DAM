@@ -136,3 +136,18 @@ export async function updateIter(name, desc, country, city, startDate, endDate, 
     console.log(error)
   })
 }
+
+//Eliminar participante
+export async function deleteParticipantFromIter(part, id) {
+  const docRef = doc(db, "viajes", id)
+  console.log(docRef)
+  await updateDoc(docRef, {
+    participants: part
+  })
+  .then((docRef) => {
+    console.log("datos actualizados")
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}

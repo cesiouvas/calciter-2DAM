@@ -1,5 +1,5 @@
 import { getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { auth, iterRef, usersRef, gastosRef, paisRef, updateIter } from './firebase2.js'
+import { auth, iterRef, usersRef, gastosRef, paisRef, updateIter, deleteParticipantFromIter } from './firebase2.js'
 import { divisionPago } from './gasto.js'
 
 let info = document.getElementById('iter-info')
@@ -26,7 +26,6 @@ export async function showIter() {
                         <td style="width: 25%; font-size: 13px;">${doc.data().name}</td>
                         <td style="width: 35%; padding-left: 8px; font-size: 13px;" class="text-decoration-underline">${doc.data().startDate} - ${doc.data().endDate}</td>
                         <td style="width: 30%; padding-left: 10px; font-size: 13px;">${doc.data().country}, ${doc.data().city}</td>
-                        <td style="width: 10px; font-size: 13px;"><button id="deleteButton" class="deleteButton"><img src="../img/delete.png" style="width: 17px; height: 20px"></button></td>
                      </table>     
                 </div>`
         cont++
@@ -273,16 +272,28 @@ export async function getIter(iter) {
             </tr>
             </table>
             
-            <div id="menuButtons" class="position-relative" style="bottom: -30%">
-                <div class="position-absolute translate-middle" style="left: 20%; width: 80px">
-                    <button id="disableFalseButton" class="btn btn-info mt-2">Editar datos del viaje</button>
-                    <button id="confirmEdit" class="btn btn-info mt-2" style="display: none">Guardar cambios</button>
-                    <button id="deleteIter" class="btn btn-danger mt-2">Eliminar viaje</button>
-                </div>
-                <div class="position-absolute translate-middle" style="right: 10%; width: 50px">
-                    <button id="addParticipant" class="btn btn-info mt-2">Añadir nuevo participante</button>
-                    <button id="deleteParticipant" class="btn btn-danger mt-2">Eliminar participante</button>
-                </div>
+            <div id="menuButtons" class="position-relative">
+                <table>
+                    <tr>
+                        <td>
+                            <button id="disableFalseButton" class="btn btn-info mt-2 inIterBtn">Editar datos del viaje</button>
+                            <button id="confirmEdit" class="btn btn-info mt-2 inIterBtn" style="display: none">Guardar cambios</button>
+                        </td>
+                        <td>
+                            <button id="addParticipant" class="btn btn-info mt-2 inIterBtn" href="#" data-bs-toggle="modal"
+                            data-bs-target="#addParticipantModal">Añadir participante</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="deleteIter" class="btn btn-danger mt-2 inIterBtn">Eliminar viaje</button>
+                        </td>
+                        <td>
+                            <button id="deleteParticipant" class="btn btn-danger mt-2 inIterBtn" href="#" data-bs-toggle="modal"
+                            data-bs-target="#deleteParticipantModal">Eliminar participante</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
             </div>`
 
@@ -356,14 +367,17 @@ export async function getIter(iter) {
 //Crea los botones de editar datos del viaje
 function createButtons() {
     let inputs = document.querySelectorAll('.iterDataInput')
+    let disableFalseButton = document.getElementById('disableFalseButton')
 
+    //Enseña el botón que guarda los cambios en los datos del viaje
     disableFalseButton.addEventListener('click', () => {
         let confirmEdit = document.getElementById('confirmEdit')
+        confirmEdit.style.display = 'block'
+        disableFalseButton.style.display = 'none'
 
         //Quita el disabled a todos los inputs para poder validarlos
         inputs.forEach((input) => {
             input.disabled = false
-            confirmEdit.style.display = 'block'
         })
     })
 
@@ -385,6 +399,59 @@ function createButtons() {
         })
         saveNewData(e)
     })
+
+    //Rellena el select para eliminar un usuario
+    deleteParticipant.addEventListener('click', async () => {
+        let participantToDelete = document.getElementById('participantToDelete')
+        let q = query(iterRef, where("iterId", "==", dataIter.iterId))
+        let querySnapshot = await getDocs(q)
+
+        //Query para obtener el nombre y apellido del usuario
+        let qUser = query(usersRef)
+        let querySnapshotUsers = await getDocs(qUser)
+
+        let cad = ``
+        let participants
+        let aux = []
+
+        querySnapshot.forEach((doc) => {
+            participants = doc.data().participants
+            for (let i = 0; i < participants.length; i++) {
+                querySnapshotUsers.forEach((docUser) => {
+                    if (participants[i] == docUser.data().email)
+                        cad += `<option value="${participants[i]}">${docUser.data().name} ${docUser.data().surname}</option>`
+                })
+            }
+        })
+        participantToDelete.innerHTML = cad
+
+        //Guarda los participantes en un array auxiliar
+        participantToDelete.addEventListener('change', () => {
+            aux = []
+            for (let i = 0; i < participants.length; i++) {
+                aux.push(participants[i])
+            }
+        })
+
+        //Elimina un participante del viaje
+        btnDeleteParticipant.addEventListener('click', async () => {
+            for (let i = 0; i < aux.length; i++) {
+                if (participantToDelete.value == aux[i]) {
+                    aux.splice(i, 1)
+                }
+            }
+            let q = query(iterRef)
+            let querySnapshot = await getDocs(q)
+
+            //Compara el "id" del viaje para actualizar el que toca
+            querySnapshot.forEach((doc) => {
+                if (dataIter.iterId == doc.data().iterId) {
+                    deleteParticipantFromIter(aux, doc.id)
+                }
+            })
+            
+        })
+    })
 }
 
 async function saveNewData(e) {
@@ -393,6 +460,8 @@ async function saveNewData(e) {
             e.preventDefault()
             let inputs = document.querySelectorAll('.iterDataInput')
             let confirmEdit = document.getElementById('confirmEdit')
+            let disableFalseButton = document.getElementById('disableFalseButton')
+            disableFalseButton.style.display = 'block'
 
             //Sacar los valores del formulario
             const itername = document.getElementById('iterDataName').value

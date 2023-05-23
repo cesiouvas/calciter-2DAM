@@ -547,13 +547,54 @@
                 </div>
                 <div class="modal-body">
                     <div class="bg-box p-5 borde text-white">
-                        <div class="btn-group" role="group">
-                            <h2>Debes dinero a: </h2>
-                        </div>
+                        <h2>Debes dinero a: </h2>
                         <hr>
                         <div id="deudasGroup" class="container p-3">
                             <!-- A quien le debes x dinero -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Añadir participante -->
+    <div class="modal fade" id="addParticipantModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" style="width: 50%;">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: white;">Añadir participante</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="bg-box p-5 borde text-white">
+                        <p>Escribe el correo electrónico del participante que quieras añadir al viaje</p>
+                        <input type="text" id="newParticipant" class="iterDataInput">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eliminar participante -->
+    <div class="modal fade" id="deleteParticipantModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" style="width: 50%;">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: white;">Eliminar participante</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="bg-box p-5 borde text-white">
+                        <p>Selecciona al participante que quieras eliminar del viaje</p>
+                        <select class="iterDataInput" name="participantToDelete" id="participantToDelete">
+                            <!-- Datos rellenados con JS -->
+                        </select>
+                        <button id="btnDeleteParticipant" class="btn btn-danger mt-4" style="width: 100%;">Eliminar</button>
                     </div>
                 </div>
             </div>
