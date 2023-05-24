@@ -95,7 +95,6 @@ const validarNom = (input, campo) => {
 
 //Las dos contraseñas coinciden
 const validarConfpasswd = () => {
-    console.log('metodo confpasswd')
     const inputPasswd1 = document.getElementById('passwd')
     const inputPasswd2 = document.getElementById('confpasswd')
 

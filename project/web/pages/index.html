@@ -83,7 +83,7 @@
     <!-- REGISTRAR -->
     <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 style="color: white;">Registrarse</h3>
@@ -187,7 +187,7 @@
     <!-- USER INFORMATION -->
     <div class="modal fade" id="userDataModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 style="color: white;" id="h3Data">Datos del usuario</h3>
@@ -236,7 +236,7 @@
     <!-- LOGIN -->
     <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="ModalSignin"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 style="color: white;">Iniciar sesión</h3>
@@ -298,7 +298,7 @@
     <!-- NUEVO VIAJE -->
     <div class="modal fade" id="newIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalNewIter"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 style="color: white;">Nuevo viaje</h3>
@@ -368,7 +368,7 @@
     <!-- ACCEDER A UN VIAJE -->
     <div class="modal fade" id="accessIterModal" tabindex="-1" role="dialog" aria-labelledby="ModalAccess"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 style="color: white;">Acceder mediante invitación</h3>
@@ -393,19 +393,19 @@
 
                             <!-- ERROR: ID no existente -->
                             <div class="formulario-error mt-2" id="invalidId">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: La
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: La
                                     invitación no es correcta</p>
                             </div>
 
                             <!-- ERROR: Usuario ya está en el viaje -->
                             <div class="formulario-error mt-2" id="userExistsInIter">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: el usuario ya está en
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: el usuario ya está en
                                     el viaje</p>
                             </div>
 
                             <!-- ID correcto -->
                             <div class="form-enviado mt-2" id="validId">
-                                <p class="p-1"><i class="fa-solid fa-check"></i> Has accedido al viaje correctamente
+                                <p><i class="fa-solid fa-check"></i> Has accedido al viaje correctamente
                                 </p>
                             </div>
                         </div>
@@ -439,7 +439,7 @@
                             <div id="select-gasto" class="columna mt-2">
                                 <label for="selectTipo">Tipo de gasto</label>
                                 <label for="precio" style="padding-left: 23%;">Precio</label>
-                                <select name="selectTipo" id="selectTipo" class="date-form">
+                                <select name="selectTipo" id="selectTipo" class="newGastoInput">
                                     <option value="0">---Selecciona tipo</option>
                                     <option value="1">Comida</option>
                                     <option value="2">Cena fuera</option>
@@ -450,14 +450,14 @@
                                     <option value="7">Gasolina</option>
                                     <option value="8">Otros</option>
                                 </select>
-                                <input type="number" class="date-form" placeholder="Precio" id="priceGasto"
+                                <input type="number" class="newGastoInput" placeholder="Precio" id="priceGasto"
                                     name="priceGasto">
                             </div>
 
                             <div class="columna mt-2">
                                 <label for="pagadoPor">Pagado por</label>
                                 <label for="pagadoEntre" style="padding-left: 27%;">Pagado entre</label>
-                                <select name="pagadoPor" id="pagadoPor" class="date-form">
+                                <select name="pagadoPor" id="pagadoPor" class="newGastoInput">
                                     <!-- JS rellena los pagadores -->
                                 </select>
                                 <button id="participantsPay" class="btn btn-light selectionAmount"
@@ -469,19 +469,19 @@
 
                             <!-- ERROR: Tienen que haber participantes para pagar -->
                             <div class="formulario-error mt-2" id="participantsNull">
-                                <p class="p-1"><i class="fas fa-exclamation-triangle"></i> Error: Tienen que haber
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: Tienen que haber
                                     participantes para dividir el pago, vuelve a seleccionar quienes no van a pagar</p>
                             </div>
 
                             <!-- ERROR: Selecciona los participantes -->
                             <div class="formulario-error mt-2" id="selectParticipants">
-                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: Selecciona cuantos
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: Selecciona cuantos
                                     participantes van a pagar</p>
                             </div>
 
                             <!-- ERROR: No se ha creado -->
                             <div class="formulario-error mt-2" id="gastoNotCreated">
-                                <p class="p-2"><i class="fas fa-exclamation-triangle"></i> Error: El gasto no se ha
+                                <p><i class="fas fa-exclamation-triangle"></i> Error: El gasto no se ha
                                     podido crear, prueba a rellenar todos los campos</p>
                             </div>
 
@@ -538,7 +538,7 @@
     <!-- Deudas -->
     <div class="modal fade" id="deudasModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered" style="width: 40%;">
+        <div class="modal-dialog modal-dialog-centered" style="width: 60%;">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Tus deudas</h3>
@@ -561,7 +561,7 @@
     <!-- Añadir participante -->
     <div class="modal fade" id="addParticipantModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered" style="width: 50%;">
+        <div class="modal-dialog modal-dialog-centered" style="width: 80%;">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Añadir participante</h3>
@@ -571,7 +571,23 @@
                 <div class="modal-body">
                     <div class="bg-box p-5 borde text-white">
                         <p>Escribe el correo electrónico del participante que quieras añadir al viaje</p>
-                        <input type="text" id="newParticipant" class="iterDataInput">
+                        <!-- EMAIL -->
+                        <div id="input-newParticipant">
+                            <input class="newParticipantInput" type="email" placeholder="ejemplo@ejemplo.es"
+                                id="newParticipant" name="newParticipant">
+                            <i style="top: 140px; right: 80px;" class="validacion-estado fas fa-times-circle"></i>
+                        </div>
+                        <button id="btnAddParticipant" class="btn btn-info mt-4" style="width: 100%;">Añadir</button>
+
+                        <!-- ERROR: No existe el usuario -->
+                        <div class="formulario-error mt-3" id="noexisteUser">
+                            <p><i class="fas fa-exclamation-triangle"></i> Error: El usuario no existe</p>
+                        </div>
+
+                        <!-- ERROR: El usuario ya está en el viaje -->
+                        <div class="formulario-error mt-3" id="userinIter">
+                            <p><i class="fas fa-exclamation-triangle"></i> Error: El usuario ya forma parte del viaje</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -581,7 +597,7 @@
     <!-- Eliminar participante -->
     <div class="modal fade" id="deleteParticipantModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered" style="width: 50%;">
+        <div class="modal-dialog modal-dialog-centered" style="width: 80%;">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h3 class="modal-title" style="color: white;">Eliminar participante</h3>
@@ -594,7 +610,14 @@
                         <select class="iterDataInput" name="participantToDelete" id="participantToDelete">
                             <!-- Datos rellenados con JS -->
                         </select>
-                        <button id="btnDeleteParticipant" class="btn btn-danger mt-4" style="width: 100%;">Eliminar</button>
+                        <button id="btnDeleteParticipant" class="btn btn-danger mt-4"
+                            style="width: 100%;">Eliminar</button>
+
+                        <!-- ERROR: No se puede eliminar ese usuario -->
+                        <div class="formulario-error mt-2" id="cannotDeleteUser">
+                            <p><i class="fas fa-exclamation-triangle"></i> Error: No se puede eliminar el usuario
+                                seleccionado</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -220,7 +220,6 @@ async function saveIter() {
         }
     })
 
-
     //Cerrar el modal
     const modal = bootstrap.Modal.getInstance(newIterForm.closest('.modal'));
     modal.hide();
