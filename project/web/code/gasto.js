@@ -190,10 +190,8 @@ async function nameTransform() {
         }
     }
 
-    console.log(allPagadores)
     //Si los participantes que van a pagar son 0 no se puede pagar
     if (allPagadores.length == 0) {
-        console.log(allPagadores)
         for (let i = 0; i < aux.length; i++) {
             allPagadores.push(aux[i])
         }
@@ -214,7 +212,6 @@ async function nameTransform() {
             }
 
         }
-        console.log(payersToDB)
         allPagadoresConfirm = true
     }
 }
@@ -272,11 +269,9 @@ function insertValues(e) {
                         allPagadores.push(datosViaje.participants[i])
                     }
                 }
-                console.log(allPagadores)
 
                 //Poner a false todos los campos
                 for (let i = 0; i < camposValidados.length; i++) {
-                    console.log(camposValidados[i])
                     camposValidados[i] = false
                 }
 
@@ -328,8 +323,6 @@ async function createGasto() {
     let qGasto = query(gastosRef)
     let querySnapshot = await getDocs(qGasto)
     let cont = true
-    console.log(datosViaje)
-    console.log(payersToDB)
 
     do {
         //Crea un id aleatorio y compara si es igual que alguno de los viajes existentes

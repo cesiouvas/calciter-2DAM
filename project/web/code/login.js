@@ -52,7 +52,6 @@ googleButton.addEventListener('click', async (e) => {
     try {
         const credentials = await signInWithPopup(auth, provider)
         console.log(credentials)
-        console.log("google sign in");
 
         const modalInstance = bootstrap.Modal.getInstance(googleButton.closest('.modal'));
         modalInstance.hide();

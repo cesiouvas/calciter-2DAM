@@ -5,6 +5,7 @@ import { createButtons } from './createButtons.js'
 
 let info = document.getElementById('iter-info')
 let newIterButtons = document.getElementById('newIterButtons')
+let botoneraPadre = document.getElementById('botoneraPadre')
 let dataIter
 
 //Validar campos
@@ -20,6 +21,8 @@ export async function showIter() {
     let cont = 1
     let q = query(iterRef, where("participants", "array-contains", auth.currentUser.email), orderBy("startDate"))
     let querySnapshot = await getDocs(q)
+    botoneraPadre.style.display = 'none'
+    newIterButtons.style.display = 'block'
 
     querySnapshot.forEach((doc) => {
         //Si es el último añade un margen en la parte inferior para ver mejor los viajes
@@ -292,7 +295,7 @@ export async function getIter(iter) {
                     </tr>
                     <tr>
                         <td>
-                            <button id="deleteIter" class="btn btn-danger mt-2 inIterBtn">Eliminar viaje</button>
+                            <button id="deleteIterBtn" class="btn btn-danger mt-2 inIterBtn">Eliminar viaje</button>
                         </td>
                         <td>
                             <button id="deleteParticipant" class="btn btn-danger mt-2 inIterBtn" href="#" data-bs-toggle="modal"
@@ -352,7 +355,7 @@ export async function getIter(iter) {
             let datosViajeDiv = document.getElementById('datosViaje')
             datosViajeDiv.style.display = 'none'
             reponerFecha()
-            createButtons()
+            createButtons(iter)
         } else {
             cad += `</div>`
             info.innerHTML = cad

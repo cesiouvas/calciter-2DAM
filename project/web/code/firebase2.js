@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js"
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"
-import { getFirestore, getDocs, collection, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
+import { getFirestore, getDocs, collection, addDoc, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -150,4 +150,18 @@ export async function updateParticipants(part, id) {
   .catch((error) => {
     console.log(error)
   })
+}
+
+//Eliminar viaje
+export async function deleteIter(id) {
+  const docRef = doc(db, "viajes", id)
+  console.log(docRef)
+  await deleteDoc(docRef)
+}
+
+//Eliminar viaje
+export async function deleteGasto(id) {
+  const docRef = doc(db, "gastos", id)
+  console.log(docRef)
+  await deleteDoc(docRef)
 }

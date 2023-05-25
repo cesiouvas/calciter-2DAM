@@ -1,6 +1,6 @@
 import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
-import { iterRef, usersRef, updateParticipants } from './firebase2.js'
-import { getIter } from './inIter.js'
+import { iterRef, usersRef, updateParticipants, deleteIter, deleteGasto, gastosRef } from './firebase2.js'
+import { getIter, showIter } from './inIter.js'
 
 //Validación correo
 const validation = {
@@ -10,10 +10,9 @@ const validation = {
 let emailValidado = false
 let newUser = document.getElementById('input-newParticipant')
 
-
-
 //Crea los botones de editar datos del viaje
 export function createButtons(dataIter) {
+    let id = dataIter.iterId
     let inputs = document.querySelectorAll('.iterDataInput')
     let disableFalseButton = document.getElementById('disableFalseButton')
 
@@ -126,9 +125,7 @@ export function createButtons(dataIter) {
 
         let noExiste = true
         let existe = false
-        let id = dataIter.iterId
         let arrayUsers = []
-        console.log(id)
 
         btnAddParticipant.addEventListener('click', async () => {
             if (emailValidado) {
@@ -197,6 +194,32 @@ export function createButtons(dataIter) {
             }
         })
     })
+
+    //Eliminar viaje
+    deleteIterBtn.addEventListener('click', async () => {
+        var resultado = window.confirm('Quieres eliminar el viaje?');
+        if (resultado === true) {
+
+            //Elimina el viaje
+            let qIter = query(iterRef, where("iterId", "==", id))
+            let querySnapshotIter = await getDocs(qIter)
+
+            querySnapshotIter.forEach((docIter) => {
+                deleteIter(docIter.id)
+            })
+            
+            //Elimina los gastos asociados al viaje
+            let q = query(gastosRef, where("iterId", "==", id))
+            let querySnapshot = await getDocs(q)
+
+            querySnapshot.forEach((doc) => {
+                deleteGasto(doc.id)
+            })
+            showIter()
+        }
+    })
+
+
 }
 
 //validar formulario
@@ -258,7 +281,7 @@ async function saveNewData(e) {
 
             confirmEdit.style.display = 'none'
         } else {
-            console.log('que')
+            //Mensaje error
         }
     } catch (error) {
         console.log(error)

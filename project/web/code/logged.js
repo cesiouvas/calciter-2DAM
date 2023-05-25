@@ -55,8 +55,6 @@ onAuthStateChanged(auth, async (user) => {
         loginCheck(user)
         newIterButtons.style.display = 'none'
         logoDiv.style.display = 'block'
-        const url = getCurrentURL()
-        console.log(url)
     }
 })
 
